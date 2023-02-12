@@ -1,0 +1,44 @@
+.header-component {
+	width: 100%;
+	height: min(100%, 100px);
+	background-color: #fff;
+	padding: 10px;
+	border-radius: 8px;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 20px;
+
+	&.one-right {
+		justify-content: flex-end;
+	}
+
+	&.one-left {
+		justify-content: flex-end;
+	}
+
+	// .custom-input {
+	// 	display: flex;
+	// 	justify-content: space-between;
+	// 	align-items: center;
+	// 	gap: 10px;
+
+	// 	button {
+	// 		width: min(100%, 250px);
+	// 		height: 40px;
+	// 		background: #3a36db;
+	// 		border-radius: 8px;
+	// 		border: 0px;
+
+	// 		font-family: 'DM Sans';
+	// 		font-style: normal;
+	// 		font-weight: 500;
+	// 		font-size: 16px;
+	// 		line-height: 21px;
+
+	// 		color: #ffffff;
+	// 	}
+	// }
+}

@@ -1,0 +1,42 @@
+#location {
+	width: 100%;
+
+	.btn {
+		width: min(100%, 200px);
+		height: 40px;
+		outline: none;
+		background: #3a36db;
+		border-radius: 10px;
+		border: 0px;
+
+		font-family: 'DM Sans';
+		font-style: normal;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 21px;
+		color: #ffffff;
+	}
+
+	input {
+		width: min(100%, 250px);
+		height: 40px;
+		border-radius: 10px;
+		border: 1px solid #d3d3d3;
+		padding-left: 10px;
+		outline: none;
+
+		font-family: 'DM Sans';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 14.22px;
+		line-height: 19px;
+		// color: #ffffff;
+		color: #06152b;
+	}
+}
+
+.form-input {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}

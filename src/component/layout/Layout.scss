@@ -1,0 +1,131 @@
+#layout {
+	min-height: 100vh;
+
+	#components-layout-demo-custom-trigger .trigger {
+		padding: 0 24px;
+		font-size: 18px;
+		line-height: 64px;
+		cursor: pointer;
+		transition: color 0.3s;
+	}
+
+	#components-layout-demo-custom-trigger .trigger:hover {
+		color: #1890ff;
+	}
+
+	#components-layout-demo-custom-trigger .logo {
+		height: 32px;
+		margin: 16px;
+		background: rgba(255, 255, 255, 0.3);
+	}
+
+	.menu-list {
+		font-family: 'DM Sans';
+		font-style: normal;
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 21px;
+		color: #06152b;
+	}
+
+	// .header-layout-background .trigger {
+	// 	background-color: #fff;
+	// 	width: 35px;
+	// 	height: 35px;
+	// 	border: none;
+	// 	outline: none;
+	// 	position: absolute;
+	// 	display: flex;
+	// 	justify-content: flex-start;
+	// 	align-items: center;
+	// 	transition: 0.4s;
+	// 	border-radius: 50%;
+	// 	left: -10px;
+	// 	&.active {
+	// 		justify-content: flex-end;
+	// 		transform: rotate(180deg);
+	// 	}
+	// }
+
+	.ant-layout-sider-trigger {
+		display: none;
+	}
+
+	.site-layout {
+		.site-layout-background {
+			// background: #d3d3d3;
+			position: relative;
+		}
+
+		.header-layout-background {
+			width: 100%;
+			background: #fff;
+			position: relative;
+			padding: 0;
+			display: flex;
+			align-items: center;
+			// background-color: goldenrod;
+			justify-content: space-between;
+			// background-color: #06152b;
+
+			.trigger {
+				width: 35px;
+				height: 35px;
+				border: none;
+				outline: none;
+				position: relative;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				transition: 0.4s;
+				border-radius: 50%;
+				left: -20px;
+				top: 10px;
+				&.active {
+					justify-content: flex-end;
+					transform: rotate(180deg);
+				}
+			}
+
+			.client-profile {
+				width: min(100%, 200px);
+				height: 100%;
+				display: flex;
+				flex-direction: row;
+
+				gap: 20px;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+
+				img {
+					border-radius: 50%;
+					border: 1px solid grey;
+				}
+				.icon-profile {
+					transform: rotate(90deg);
+				}
+			}
+		}
+	}
+
+	.logo {
+		height: 32px;
+		margin: 14px;
+		background-color: #fff;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: 600;
+		color: #000;
+		transition: ease-in-out 0.3s;
+
+		letter-spacing: 4px;
+		&.active {
+			border-radius: 50%;
+			width: 32px;
+			letter-spacing: 0px;
+		}
+	}
+}
