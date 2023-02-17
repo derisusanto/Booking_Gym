@@ -3,6 +3,9 @@ import { Form, Formik } from 'formik';
 import { Col, Row } from 'antd';
 import CustomInput from '../../../component/formInput/customInput';
 import { locationSchema } from '../../../schemas/master_schema';
+import CustomSelect from '../../../component/formInput/customSelect';
+import { listTime } from './listTime';
+
 import './location.scss';
 
 export const FormEditLocation = ({ onSubmit, onCancelForm, data }) => {
@@ -42,18 +45,20 @@ export const FormEditLocation = ({ onSubmit, onCancelForm, data }) => {
 								<label>Operational Hour</label>
 								<Row gutter={16}>
 									<Col span={12} md={12}>
-										<CustomInput
+										<CustomSelect
 											label=""
 											name="startTime"
 											type="text"
+											options={listTime}
 											placeholder="start time"
 										/>
 									</Col>
 									<Col span={12} md={12}>
-										<CustomInput
+										<CustomSelect
 											label=""
 											name="endTime"
 											type="text"
+											options={listTime}
 											placeholder="end Time"
 										/>
 									</Col>

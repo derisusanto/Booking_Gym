@@ -16,11 +16,13 @@ function Signup() {
 			.then(res => {
 				if (res.status === 201) {
 					actions.resetForm();
+					actions.setSubmitting(false);
 					message.success('Register Success');
 				}
 			})
 			.catch(err => {
-				console.log(err);
+				message.error(`${err.response.data.message}`);
+				actions.setSubmitting(false);
 			});
 	};
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Absensi from '../pages/absensi';
 import Category from '../pages/master/category';
 
-const Schedule = React.lazy(() => import('../pages/schedule/schedule/index'));
+const Schedule = React.lazy(() => import('../pages/schedule/index'));
 const Class = React.lazy(() => import('../pages/master/class/index'));
 const Location = React.lazy(() => import('../pages/master/location/index'));
 const Room = React.lazy(() => import('../pages/master/room/index'));

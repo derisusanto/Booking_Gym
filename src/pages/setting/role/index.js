@@ -86,10 +86,11 @@ const User = () => {
 		listRole()
 			.then(res => {
 				if (res.status === 200) {
+					console.log(res);
 					const dataTemp = res.data.data.map((item, index) => ({
 						key: index,
 						id: item.id,
-						role: item.roleName
+						role: item.nama
 					}));
 					setDataRole(dataTemp);
 				}
@@ -111,6 +112,7 @@ const User = () => {
 		createRole(values)
 			.then(res => {
 				if (res.status === 201) {
+					getlistRole();
 					setState(initialState);
 					message.success('Add Role Success');
 					actions.resetForm();
@@ -127,6 +129,7 @@ const User = () => {
 		getRoleById(idRole)
 			.then(res => {
 				if (res.status === 200) {
+					console.log(res);
 					const data = res.data.data;
 
 					setDataRoleById({
@@ -136,7 +139,7 @@ const User = () => {
 					});
 					setState(prevState => ({
 						...prevState,
-						editClass: true,
+						editRole: true,
 						hidden: true
 					}));
 				}

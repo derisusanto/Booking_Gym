@@ -2,9 +2,10 @@ import { Form, Formik } from 'formik';
 
 import { Col, Row } from 'antd';
 import CustomInput from '../../../component/formInput/customInput';
+import CustomSelect from '../../../component/formInput/customSelect';
+import { listTime } from './listTime';
 import { locationSchema } from '../../../schemas/master_schema';
 import './location.scss';
-
 export const FormAddLocation = ({ onSubmit, onCancelForm }) => {
 	return (
 		<div className="card-form-input">
@@ -47,18 +48,20 @@ export const FormAddLocation = ({ onSubmit, onCancelForm }) => {
 								<label>Operational Hour</label>
 								<Row gutter={16}>
 									<Col span={12} md={12}>
-										<CustomInput
+										<CustomSelect
 											label=""
 											name="startTime"
 											type="text"
+											options={listTime}
 											placeholder="start time"
 										/>
 									</Col>
 									<Col span={12} md={12}>
-										<CustomInput
+										<CustomSelect
 											label=""
 											name="endTime"
 											type="text"
+											options={listTime}
 											placeholder="end Time"
 										/>
 									</Col>

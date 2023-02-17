@@ -1,3 +1,8 @@
+.schedule-background {
+	background-color: #fff;
+	padding: 10px;
+}
+
 .rbc-day-slot .rbc-event {
 	position: absolute;
 	overflow-y: scroll;
@@ -17,6 +22,15 @@
 .rbc-time-slot {
 	color: #000;
 	font-weight: 600;
+}
+
+//hide column paling kiri
+.rbc-time-content > .rbc-time-gutter {
+	display: none;
+}
+//hide column paling kiri
+.rbc-label {
+	padding: 0px;
 }
 
 .rbc-day-slot .rbc-event-label {

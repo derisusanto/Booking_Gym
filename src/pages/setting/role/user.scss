@@ -1,4 +1,4 @@
-#class {
+#user {
 	width: 100%;
 
 	.btn {
@@ -96,27 +96,5 @@
 			opacity: 0.5;
 			pointer-events: none;
 		}
-	}
-}
-
-.confirm-client {
-	width: min(100%, 80px);
-	height: 35px;
-	background-color: #28b463;
-	border: 0px;
-	border-radius: 4px;
-	outline: none;
-
-	font-family: 'DM Sans';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 13px;
-	line-height: 21px;
-	color: #ffffff;
-
-	&:disabled {
-		background-color: #d3d3d3;
-		opacity: 0.5;
-		pointer-events: none;
 	}
 }

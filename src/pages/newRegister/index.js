@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import TableComponent from '../../component/table/TableData';
 import CustomInputHeader from '../../component/customInputHeader/customInputHeader';
+import { CheckOutlined } from '@ant-design/icons';
 
 import './newRegister.scss';
-import { ICON } from '../../assets/icons/icons';
-import { listNewMember } from '../../service/listRegistration';
+import {
+	changeClientTobeMember,
+	listNewMember
+} from '../../service/listRegistration';
+import { message } from 'antd';
 
 const NewRegister = () => {
 	const columns = [
@@ -43,18 +47,12 @@ const NewRegister = () => {
 			align: 'center',
 			render: (record, item) => (
 				<div className="action-button">
-					<ICON.EDIT
-						width={30}
-						onClick={() => {
-							// showRoom(item.id);
-						}}
-					/>
-					<ICON.DELETE
-						width={30}
-						onClick={() => {
-							// onDelete(item.id);
-						}}
-					/>
+					<button
+						className="confirm-client"
+						onClick={() => confirmClient(item.id)}
+					>
+						Confirm <CheckOutlined />
+					</button>
 				</div>
 			)
 		}
@@ -88,6 +86,19 @@ const NewRegister = () => {
 						phoneNumber: item.phoneNumber
 					}));
 					setDataNewMember(dataTemp);
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+
+	const confirmClient = clientId => {
+		changeClientTobeMember(clientId)
+			.then(res => {
+				if (res.status === 200) {
+					getListNewMember();
+					message.success(`Confirm Client Success`);
 				}
 			})
 			.catch(err => {

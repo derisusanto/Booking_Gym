@@ -40,7 +40,7 @@ const Category = () => {
 			dataIndex: 'id',
 			key: 'x',
 			responsive: ['sm'],
-			align: 'end',
+			align: 'center',
 			render: (record, item) => (
 				<React.Fragment>
 					{item.isEdit ? (

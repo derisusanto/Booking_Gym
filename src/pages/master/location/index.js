@@ -123,7 +123,6 @@ const Location = () => {
 				}
 			})
 			.catch(err => {
-				actions.setSubmitting(false);
 				message.error(`${err.response?.data?.message}`);
 			});
 	};

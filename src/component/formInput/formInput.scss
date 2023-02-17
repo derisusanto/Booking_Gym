@@ -17,6 +17,19 @@
 		border-radius: 5px;
 	}
 
+	.ant-picker {
+		height: 40px;
+		border-radius: 5px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #fff;
+		color: #06152b;
+		// border: 1px solid #d3d3d3;
+		padding: 0px 10px;
+		outline: none;
+	}
+
 	.input-error {
 		border: 1px solid #e74c3c;
 		outline: #e74c3c;
