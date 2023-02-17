@@ -58,7 +58,7 @@ const items = [
 				label: 'Member'
 			},
 			{
-				key: 'Trainer',
+				key: 'Userdata/Trainer',
 				label: 'Trainer'
 			}
 		]
@@ -79,11 +79,11 @@ const items = [
 		label: 'Setting',
 		children: [
 			{
-				key: 'User',
+				key: 'Setting/User',
 				label: 'User'
 			},
 			{
-				key: 'Role',
+				key: 'Setting/Role',
 				label: 'Role'
 			},
 			{

@@ -2,22 +2,21 @@ import React, { useState, useEffect } from 'react';
 import TableComponent from '../../../component/table/TableData';
 import CustomInputHeader from '../../../component/customInputHeader/customInputHeader';
 
-import { FormEditClass } from './formEditClass';
-import { FormAddClass } from './formAddClass';
+import { FormAddRole } from './formAddRole';
+import { FormEditRole } from './formEditRole';
 import { message } from 'antd';
 import { ICON } from '../../../assets/icons/icons';
 
+import './role.scss';
 import {
-	createClass,
-	deleteClass,
-	getClassById,
-	listCategory,
-	listClass,
-	putClass
-} from '../../../service/master';
+	listRole,
+	createRole,
+	deleteRole,
+	getRoleById,
+	putRole
+} from '../../../service/setting';
 
-import './class.scss';
-const Class = () => {
+const User = () => {
 	const columns = [
 		{
 			title: 'No',
@@ -26,8 +25,8 @@ const Class = () => {
 		},
 
 		{
-			title: 'Class',
-			dataIndex: 'class'
+			title: 'Role',
+			dataIndex: 'role'
 		},
 
 		{
@@ -41,7 +40,7 @@ const Class = () => {
 					<ICON.EDIT
 						width={30}
 						onClick={() => {
-							showClass(item.id);
+							showRole(item.id);
 						}}
 					/>
 					<ICON.DELETE
@@ -56,24 +55,23 @@ const Class = () => {
 	];
 
 	const initialState = {
-		addClass: false,
-		editClass: false,
+		addRole: false,
+		editRole: false,
 		hidden: false
 	};
 
 	const [state, setState] = useState({
-		addClass: false,
-		editClass: false,
+		addRole: false,
+		editRole: false,
 		hidden: false
 	});
 
-	const [dataCatagory, setDataCategory] = useState([]);
-	const [dataClass, setDataClass] = useState([]);
-	const [dataClassById, setDataClassById] = useState({});
+	const [dataRole, setDataRole] = useState([]);
+	const [dataRoleById, setDataRoleById] = useState({});
 	const [page, setPage] = useState(1);
 
 	const [query, setQuery] = useState('');
-	const keys = ['class'];
+	const keys = ['role'];
 	const search = data => {
 		return data.filter(item =>
 			keys.some(key => item[key].toLowerCase().includes(query))
@@ -81,36 +79,20 @@ const Class = () => {
 	};
 
 	useEffect(() => {
-		getlistCategory();
-		getlistClass();
+		getlistRole();
 	}, []);
 
-	const getlistCategory = () => {
-		listCategory()
+	const getlistRole = () => {
+		listRole()
 			.then(res => {
 				if (res.status === 200) {
-					const dataTemp = res.data.data.map(item => ({
-						label: item.nama,
-						value: item.id
-					}));
-					setDataCategory(dataTemp);
-				}
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	};
-
-	const getlistClass = () => {
-		listClass()
-			.then(res => {
-				if (res.status === 200) {
+					console.log(res);
 					const dataTemp = res.data.data.map((item, index) => ({
 						key: index,
 						id: item.id,
-						class: item.nama
+						role: item.roleName
 					}));
-					setDataClass(dataTemp);
+					setDataRole(dataTemp);
 				}
 			})
 			.catch(err => {
@@ -118,20 +100,20 @@ const Class = () => {
 			});
 	};
 
-	const addClass = () => {
+	const addRole = () => {
 		setState(prevState => ({
 			...prevState,
-			addClass: !prevState.addClass,
+			addRole: !prevState.addRole,
 			hidden: !prevState.hidden
 		}));
 	};
 
 	const onSubmit = (values, actions) => {
-		createClass(values)
+		createRole(values)
 			.then(res => {
 				if (res.status === 201) {
 					setState(initialState);
-					message.success('Add Class Success');
+					message.success('Add Role Success');
 					actions.resetForm();
 					actions.setSubmitting(false);
 				}
@@ -142,21 +124,17 @@ const Class = () => {
 			});
 	};
 
-	const showClass = idClass => {
-		getClassById(idClass)
+	const showRole = idRole => {
+		getRoleById(idRole)
 			.then(res => {
-				console.log(res);
 				if (res.status === 200) {
+					console.log(res);
 					const data = res.data.data;
 
-					setDataClassById({
+					setDataRoleById({
 						id: data.id,
 						nama: data.nama,
-						description: data.description,
-						categoryId: data.category?.id,
-						startAge: data.startAge,
-						endAge: data.endAge,
-						gender: data.gender
+						description: data.description
 					});
 					setState(prevState => ({
 						...prevState,
@@ -171,14 +149,12 @@ const Class = () => {
 	};
 
 	const onPut = (values, actions) => {
-		console.log(values);
-		console.log(dataClassById.id);
-		putClass(dataClassById.id, values)
+		putRole(dataRoleById.id, values)
 			.then(res => {
 				if (res.status === 200) {
-					getlistClass();
+					getlistRole();
 					setState(initialState);
-					message.success(`Edit Class Success`);
+					message.success(`Edit Role Success`);
 					actions.resetForm();
 					actions.setSubmitting(false);
 				}
@@ -189,11 +165,11 @@ const Class = () => {
 	};
 
 	const onDelete = id => {
-		deleteClass(id)
+		deleteRole(id)
 			.then(res => {
 				if (res.status === 200) {
-					message.error('Class Deleted');
-					getlistClass();
+					message.error('Role Deleted');
+					getlistRole();
 				}
 			})
 			.catch(err => {
@@ -203,19 +179,19 @@ const Class = () => {
 
 	const onCancelForm = () => {
 		setState({
-			addClass: false,
-			editClass: false,
+			addRole: false,
+			editRole: false,
 			hidden: false
 		});
 	};
 
 	return (
 		<React.Fragment>
-			<div className={state.hidden ? 'd-none' : 'class'} id="class">
+			<div className={state.hidden ? 'd-none' : 'user'} id="user">
 				<CustomInputHeader
 					content={
 						<React.Fragment>
-							<button className="btn" onClick={addClass}>
+							<button className="btn" onClick={addRole}>
 								New
 							</button>
 							<input
@@ -229,7 +205,7 @@ const Class = () => {
 				/>
 				<TableComponent
 					columns={columns}
-					dataSource={search(dataClass)}
+					dataSource={search(dataRole)}
 					pagination={{
 						// pageSize: 25,
 						onChange: e => setPage(e),
@@ -240,17 +216,12 @@ const Class = () => {
 					}}
 				/>
 			</div>
-			{state.addClass && (
-				<FormAddClass
-					onCancelForm={onCancelForm}
-					listCategory={dataCatagory}
-					onSubmit={onSubmit}
-				/>
+			{state.addRole && (
+				<FormAddRole onCancelForm={onCancelForm} onSubmit={onSubmit} />
 			)}
-			{state.editClass && (
-				<FormEditClass
-					data={dataClassById}
-					listCategory={dataCatagory}
+			{state.editRole && (
+				<FormEditRole
+					data={dataRoleById}
 					onCancelForm={onCancelForm}
 					onSubmit={onPut}
 				/>
@@ -258,4 +229,4 @@ const Class = () => {
 		</React.Fragment>
 	);
 };
-export default Class;
+export default User;

@@ -2,22 +2,23 @@ import React, { useState, useEffect } from 'react';
 import TableComponent from '../../../component/table/TableData';
 import CustomInputHeader from '../../../component/customInputHeader/customInputHeader';
 
-import { FormEditClass } from './formEditClass';
-import { FormAddClass } from './formAddClass';
+import { FormEditUser } from './formEditUser';
+import { FormAddUser } from './formAddUser';
 import { message } from 'antd';
 import { ICON } from '../../../assets/icons/icons';
 
+import { listLocation } from '../../../service/master';
 import {
-	createClass,
-	deleteClass,
-	getClassById,
-	listCategory,
-	listClass,
-	putClass
-} from '../../../service/master';
+	createUser,
+	deleteUser,
+	getUserById,
+	listUser,
+	putUser
+} from '../../../service/setting';
 
-import './class.scss';
-const Class = () => {
+import './user.scss';
+
+const User = () => {
 	const columns = [
 		{
 			title: 'No',
@@ -26,8 +27,8 @@ const Class = () => {
 		},
 
 		{
-			title: 'Class',
-			dataIndex: 'class'
+			title: 'User',
+			dataIndex: 'user'
 		},
 
 		{
@@ -41,7 +42,7 @@ const Class = () => {
 					<ICON.EDIT
 						width={30}
 						onClick={() => {
-							showClass(item.id);
+							showUser(item.id);
 						}}
 					/>
 					<ICON.DELETE
@@ -56,24 +57,24 @@ const Class = () => {
 	];
 
 	const initialState = {
-		addClass: false,
-		editClass: false,
+		addUser: false,
+		editUser: false,
 		hidden: false
 	};
 
 	const [state, setState] = useState({
-		addClass: false,
-		editClass: false,
+		addUser: false,
+		editUser: false,
 		hidden: false
 	});
 
-	const [dataCatagory, setDataCategory] = useState([]);
-	const [dataClass, setDataClass] = useState([]);
-	const [dataClassById, setDataClassById] = useState({});
+	const [dataLocations, setDataLocations] = useState([]);
+	const [dataUser, setDataUser] = useState([]);
+	const [dataUserById, setDataUserById] = useState({});
 	const [page, setPage] = useState(1);
 
 	const [query, setQuery] = useState('');
-	const keys = ['class'];
+	const keys = ['user'];
 	const search = data => {
 		return data.filter(item =>
 			keys.some(key => item[key].toLowerCase().includes(query))
@@ -81,19 +82,19 @@ const Class = () => {
 	};
 
 	useEffect(() => {
-		getlistCategory();
-		getlistClass();
+		getlistLocations();
+		getlistUser();
 	}, []);
 
-	const getlistCategory = () => {
-		listCategory()
+	const getlistLocations = () => {
+		listLocation()
 			.then(res => {
 				if (res.status === 200) {
 					const dataTemp = res.data.data.map(item => ({
 						label: item.nama,
 						value: item.id
 					}));
-					setDataCategory(dataTemp);
+					setDataLocations(dataTemp);
 				}
 			})
 			.catch(err => {
@@ -101,16 +102,16 @@ const Class = () => {
 			});
 	};
 
-	const getlistClass = () => {
-		listClass()
+	const getlistUser = () => {
+		listUser()
 			.then(res => {
 				if (res.status === 200) {
 					const dataTemp = res.data.data.map((item, index) => ({
 						key: index,
 						id: item.id,
-						class: item.nama
+						user: item.nama
 					}));
-					setDataClass(dataTemp);
+					setDataUser(dataTemp);
 				}
 			})
 			.catch(err => {
@@ -118,20 +119,21 @@ const Class = () => {
 			});
 	};
 
-	const addClass = () => {
+	const addUser = () => {
 		setState(prevState => ({
 			...prevState,
-			addClass: !prevState.addClass,
+			addUser: !prevState.addUser,
 			hidden: !prevState.hidden
 		}));
 	};
 
 	const onSubmit = (values, actions) => {
-		createClass(values)
+		createUser(values)
 			.then(res => {
 				if (res.status === 201) {
+					getlistUser();
 					setState(initialState);
-					message.success('Add Class Success');
+					message.success('Add User Success');
 					actions.resetForm();
 					actions.setSubmitting(false);
 				}
@@ -142,25 +144,23 @@ const Class = () => {
 			});
 	};
 
-	const showClass = idClass => {
-		getClassById(idClass)
+	const showUser = idUser => {
+		getUserById(idUser)
 			.then(res => {
 				console.log(res);
 				if (res.status === 200) {
 					const data = res.data.data;
 
-					setDataClassById({
+					setDataUserById({
 						id: data.id,
 						nama: data.nama,
-						description: data.description,
-						categoryId: data.category?.id,
-						startAge: data.startAge,
-						endAge: data.endAge,
-						gender: data.gender
+						email: data.email,
+						locationId: data.location?.id,
+						phoneNumber: data.phoneNumber
 					});
 					setState(prevState => ({
 						...prevState,
-						editClass: true,
+						editUser: true,
 						hidden: true
 					}));
 				}
@@ -171,14 +171,12 @@ const Class = () => {
 	};
 
 	const onPut = (values, actions) => {
-		console.log(values);
-		console.log(dataClassById.id);
-		putClass(dataClassById.id, values)
+		putUser(dataUserById.id, values)
 			.then(res => {
 				if (res.status === 200) {
-					getlistClass();
+					getlistUser();
 					setState(initialState);
-					message.success(`Edit Class Success`);
+					message.success(`Edit User Success`);
 					actions.resetForm();
 					actions.setSubmitting(false);
 				}
@@ -189,11 +187,11 @@ const Class = () => {
 	};
 
 	const onDelete = id => {
-		deleteClass(id)
+		deleteUser(id)
 			.then(res => {
 				if (res.status === 200) {
-					message.error('Class Deleted');
-					getlistClass();
+					message.error('User Deleted');
+					getlistUser();
 				}
 			})
 			.catch(err => {
@@ -203,19 +201,19 @@ const Class = () => {
 
 	const onCancelForm = () => {
 		setState({
-			addClass: false,
-			editClass: false,
+			addUser: false,
+			editUser: false,
 			hidden: false
 		});
 	};
 
 	return (
 		<React.Fragment>
-			<div className={state.hidden ? 'd-none' : 'class'} id="class">
+			<div className={state.hidden ? 'd-none' : 'user'} id="user">
 				<CustomInputHeader
 					content={
 						<React.Fragment>
-							<button className="btn" onClick={addClass}>
+							<button className="btn" onClick={addUser}>
 								New
 							</button>
 							<input
@@ -229,7 +227,7 @@ const Class = () => {
 				/>
 				<TableComponent
 					columns={columns}
-					dataSource={search(dataClass)}
+					dataSource={search(dataUser)}
 					pagination={{
 						// pageSize: 25,
 						onChange: e => setPage(e),
@@ -240,17 +238,17 @@ const Class = () => {
 					}}
 				/>
 			</div>
-			{state.addClass && (
-				<FormAddClass
+			{state.addUser && (
+				<FormAddUser
 					onCancelForm={onCancelForm}
-					listCategory={dataCatagory}
+					listLocation={dataLocations}
 					onSubmit={onSubmit}
 				/>
 			)}
-			{state.editClass && (
-				<FormEditClass
-					data={dataClassById}
-					listCategory={dataCatagory}
+			{state.editUser && (
+				<FormEditUser
+					data={dataUserById}
+					listLocation={dataLocations}
 					onCancelForm={onCancelForm}
 					onSubmit={onPut}
 				/>
@@ -258,4 +256,4 @@ const Class = () => {
 		</React.Fragment>
 	);
 };
-export default Class;
+export default User;

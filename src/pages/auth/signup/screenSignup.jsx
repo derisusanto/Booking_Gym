@@ -1,31 +1,27 @@
 import './signup.scss';
-import { Form, Formik, ErrorMessage } from 'formik';
+import { Form, Formik } from 'formik';
 import { signupSchema } from '../../../schemas';
 import CustomInput from '../../../component/formInput/customInput';
 import CustomTextArea from '../../../component/formInput/customTextArea';
 import CustomSelect from '../../../component/formInput/customSelect';
-import CustomRadio from '../../../component/formInput/customRadio';
-import CustomCheckbox from '../../../component/formInput/customCheckbox';
 
-const ScreenSignup = ({ onSubmit, isEyes, onSetIsEyes }) => {
+const ScreenSignup = ({ onSubmit }) => {
 	return (
-		<div className="form-signin" id="form-signin">
-			<div className="box-signin">
-				<div className="title-form-signin">Sign Up</div>
+		<div className="form-signup" id="form-signup">
+			<div className="box-signup">
+				<div className="title-form-signup">Sign Up</div>
 				<Formik
 					initialValues={{
 						childName: '',
-						email: '',
-						phoneNumber: '',
 						gender: '',
-						placeBirth: '',
-						childBirth: '',
-						formalSchool: '',
-						parentsName: '',
-						formalSchool: '',
-						address: '',
-						reasonsJoining: '',
-						preferredTime: ''
+						birthPlace: '',
+						birthDate: '',
+						Address: '',
+						phoneNumber: '',
+						medicalRecord: '',
+						reasonsTraining: '',
+						email: '',
+						classType: ''
 					}}
 					validationSchema={signupSchema}
 					onSubmit={onSubmit}
@@ -59,46 +55,17 @@ const ScreenSignup = ({ onSubmit, isEyes, onSetIsEyes }) => {
 
 							<CustomInput
 								label="Place of Birth"
-								name="placeBirth"
+								name="birthPlace"
 								type="text"
 								className="form-control"
 								placeholder="Place Of Birth"
 							/>
 							<CustomInput
 								label="Child Birth Date"
-								name="childBirth"
+								name="birthDate"
 								type="date"
 								className="form-control"
 								placeholder="081 xxx xxx xxx"
-							/>
-							<CustomTextArea
-								label="Address"
-								name="address"
-								type="text"
-								className="form-control"
-								placeholder="Address"
-							/>
-
-							{/* <CustomInput
-								label="Name of Childs's Formal School"
-								name="formalSchool"
-								type="text"
-								className="form-control"
-								placeholder="Formal School"
-							/> */}
-							{/* <CustomInput
-								label="Parent's Name"
-								name="parentsName"
-								type="text"
-								className="form-control"
-								placeholder="Parent's Name"
-							/> */}
-							<CustomInput
-								label="Phone Number"
-								name="phoneNumber"
-								type="text"
-								className="form-control"
-								placeholder="08x xxx xxx xxx"
 							/>
 							<CustomInput
 								label="Email"
@@ -107,16 +74,31 @@ const ScreenSignup = ({ onSubmit, isEyes, onSetIsEyes }) => {
 								className="form-control"
 								placeholder="Email"
 							/>
+							<CustomInput
+								label="Phone Number"
+								name="phoneNumber"
+								type="text"
+								className="form-control"
+								placeholder="08x xxx xxx xxx"
+							/>
+
+							<CustomTextArea
+								label="Address"
+								name="Address"
+								type="text"
+								className="form-control"
+								placeholder="Address"
+							/>
 							<CustomTextArea
 								label="Medical Record (if you have)"
-								name="address"
+								name="medicalRecord"
 								type="text"
 								className="form-control"
 								placeholder="Medical Record"
 							/>
 							<CustomTextArea
 								label="Reasons to Follow Gymnastics Training"
-								name="address"
+								name="reasonsTraining"
 								type="text"
 								className="form-control"
 								placeholder="Reasons to Follow Gymnastics Training"
@@ -130,8 +112,8 @@ const ScreenSignup = ({ onSubmit, isEyes, onSetIsEyes }) => {
 							/> */}
 							<CustomSelect
 								label="Class Type"
-								name="preferredTime"
-								placeholder="Select a person"
+								name="classType"
+								placeholder="please select one class"
 								options={[
 									{
 										value: 'SV',
@@ -152,24 +134,23 @@ const ScreenSignup = ({ onSubmit, isEyes, onSetIsEyes }) => {
 								]}
 							/>
 
-							<div className="terms">
+							{/* <div className="terms">
 								<CustomCheckbox
 									label="All"
 									value="all"
-									type="radio"
+									// type="radio"
 									name="gender"
 								/>
 								<a>I accept the terms of service</a>
-							</div>
+							</div> */}
 
 							<button
 								disabled={isSubmitting}
 								type="submit"
-								className="btn-signin"
+								className="btn-signup"
 							>
-								Sign Up
+								{isSubmitting ? 'Loading ...' : 'Sign Up'}
 							</button>
-							<a href="/signin">signin!</a>
 						</Form>
 					)}
 				</Formik>

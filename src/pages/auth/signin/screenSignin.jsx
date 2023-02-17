@@ -20,14 +20,14 @@ const ScreenSignin = ({ onSubmit, isEyes, onSetIsEyes }) => {
 								name="email"
 								type="email"
 								className="form-control"
-								placeholder="Enter your email@"
+								placeholder="please insert your email"
 							/>
 
 							<CustomInput
 								label="Password"
 								name="password"
 								type={isEyes ? 'text' : 'password'}
-								placeholder="Enter your password"
+								placeholder="please insert your password"
 							/>
 
 							<div className="form-cehckbox">

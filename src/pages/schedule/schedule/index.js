@@ -30,7 +30,7 @@ const Schedule = () => {
 
 	const onSelectSlot = e => {
 		const { action, start, end } = e;
-		console.log(new Date(end).getMinutes() + 30);
+		// console.log(new Date(end).getMinutes() + 30);
 		const data = {
 			title: 'Test',
 			start,

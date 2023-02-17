@@ -1,52 +1,35 @@
 import { Form, Formik } from 'formik';
 
 import CustomInput from '../../../component/formInput/customInput';
-import CustomSelect from '../../../component/formInput/customSelect';
-import { roomSchema } from '../../../schemas/master_schema';
 
-import './room.scss';
+import './role.scss';
+import { roleSchema } from '../../../schemas/setting';
 
-export const FormAddRoom = ({ onSubmit, onCancelForm, listLocation }) => {
+export const FormEditRole = ({ onSubmit, onCancelForm, data }) => {
 	return (
 		<div className="card-form-input">
 			<Formik
-				initialValues={{
-					nama: '',
-					type: '',
-					capacity: '',
-					locationId: ''
-				}}
-				validationSchema={roomSchema}
+				initialValues={data}
+				enableReinitialize={true}
+				validationSchema={roleSchema}
 				onSubmit={onSubmit}
 			>
 				{({ isSubmitting }) => (
 					<Form className="form">
-						<div className="form-input-room">
+						<div className="form-input-class">
 							<CustomInput
-								label="Room Name"
+								label="Class Name"
 								name="nama"
 								type="text"
 								className="form-control"
-								placeholder="room name"
+								placeholder="class name"
 							/>
 
 							<CustomInput
-								label="Room Type"
-								name="type"
+								label="Description"
+								name="description"
 								type="text"
-								placeholder="room type"
-							/>
-							<CustomInput
-								label="Capacity"
-								name="capacity"
-								type="text"
-								placeholder="capacity"
-							/>
-							<CustomSelect
-								label="Location"
-								name="locationId"
-								placeholder="please select location"
-								options={listLocation}
+								placeholder="decriptions"
 							/>
 						</div>
 						<div className="bottom-confirm">

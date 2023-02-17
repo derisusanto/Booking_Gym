@@ -2,22 +2,21 @@ import React, { useState, useEffect } from 'react';
 import TableComponent from '../../../component/table/TableData';
 import CustomInputHeader from '../../../component/customInputHeader/customInputHeader';
 
-import { FormEditClass } from './formEditClass';
-import { FormAddClass } from './formAddClass';
 import { message } from 'antd';
 import { ICON } from '../../../assets/icons/icons';
 
 import {
-	createClass,
-	deleteClass,
-	getClassById,
-	listCategory,
-	listClass,
-	putClass
-} from '../../../service/master';
+	createTrainer,
+	deleteTrainer,
+	getTrainerById,
+	listTrainer,
+	putTrainer
+} from '../../../service/userData';
+import { FormAddTrainer } from './formAddTrainer';
+import { FormEditTrainer } from './formEditTrainer';
 
-import './class.scss';
-const Class = () => {
+// import './class.scss';
+const Trainer = () => {
 	const columns = [
 		{
 			title: 'No',
@@ -26,8 +25,8 @@ const Class = () => {
 		},
 
 		{
-			title: 'Class',
-			dataIndex: 'class'
+			title: 'Trainer',
+			dataIndex: 'trainer'
 		},
 
 		{
@@ -35,13 +34,13 @@ const Class = () => {
 			dataIndex: 'id',
 			key: 'x',
 			responsive: ['sm'],
-			align: 'center',
+			align: 'end',
 			render: (record, item) => (
 				<div className="action-button">
 					<ICON.EDIT
 						width={30}
 						onClick={() => {
-							showClass(item.id);
+							showTrainer(item.id);
 						}}
 					/>
 					<ICON.DELETE
@@ -56,24 +55,24 @@ const Class = () => {
 	];
 
 	const initialState = {
-		addClass: false,
-		editClass: false,
+		addTrainer: false,
+		editTrainer: false,
 		hidden: false
 	};
 
 	const [state, setState] = useState({
-		addClass: false,
-		editClass: false,
+		addTrainer: false,
+		editTrainer: false,
 		hidden: false
 	});
 
-	const [dataCatagory, setDataCategory] = useState([]);
-	const [dataClass, setDataClass] = useState([]);
-	const [dataClassById, setDataClassById] = useState({});
+	const [dataTrainer, setDataTrainer] = useState([]);
+
+	const [dataTrainerById, setDataTrainerById] = useState({});
 	const [page, setPage] = useState(1);
 
 	const [query, setQuery] = useState('');
-	const keys = ['class'];
+	const keys = ['trainer'];
 	const search = data => {
 		return data.filter(item =>
 			keys.some(key => item[key].toLowerCase().includes(query))
@@ -81,36 +80,19 @@ const Class = () => {
 	};
 
 	useEffect(() => {
-		getlistCategory();
-		getlistClass();
+		getlistTrainer();
 	}, []);
 
-	const getlistCategory = () => {
-		listCategory()
-			.then(res => {
-				if (res.status === 200) {
-					const dataTemp = res.data.data.map(item => ({
-						label: item.nama,
-						value: item.id
-					}));
-					setDataCategory(dataTemp);
-				}
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	};
-
-	const getlistClass = () => {
-		listClass()
+	const getlistTrainer = () => {
+		listTrainer()
 			.then(res => {
 				if (res.status === 200) {
 					const dataTemp = res.data.data.map((item, index) => ({
 						key: index,
 						id: item.id,
-						class: item.nama
+						trainer: item.nama
 					}));
-					setDataClass(dataTemp);
+					setDataTrainer(dataTemp);
 				}
 			})
 			.catch(err => {
@@ -118,20 +100,21 @@ const Class = () => {
 			});
 	};
 
-	const addClass = () => {
+	const addTrainer = () => {
 		setState(prevState => ({
 			...prevState,
-			addClass: !prevState.addClass,
+			addTrainer: !prevState.addTrainer,
 			hidden: !prevState.hidden
 		}));
 	};
 
 	const onSubmit = (values, actions) => {
-		createClass(values)
+		createTrainer(values)
 			.then(res => {
 				if (res.status === 201) {
+					getlistTrainer();
 					setState(initialState);
-					message.success('Add Class Success');
+					message.success('Add Trainer Success');
 					actions.resetForm();
 					actions.setSubmitting(false);
 				}
@@ -142,25 +125,28 @@ const Class = () => {
 			});
 	};
 
-	const showClass = idClass => {
-		getClassById(idClass)
+	const showTrainer = idTrainer => {
+		getTrainerById(idTrainer)
 			.then(res => {
-				console.log(res);
 				if (res.status === 200) {
+					console.log(res);
 					const data = res.data.data;
 
-					setDataClassById({
+					setDataTrainerById({
 						id: data.id,
 						nama: data.nama,
-						description: data.description,
-						categoryId: data.category?.id,
-						startAge: data.startAge,
-						endAge: data.endAge,
+						email: data.email,
+						phoneNumber: data.phoneNumber,
+						accountNumber: data.accountNumber,
+						bankAccount: data.bankAccount,
+						birthPlace: data.birthPlace,
+						birthDate: data.birthDate,
+						contactPerson: data.contactPerson,
 						gender: data.gender
 					});
 					setState(prevState => ({
 						...prevState,
-						editClass: true,
+						editTrainer: true,
 						hidden: true
 					}));
 				}
@@ -171,16 +157,14 @@ const Class = () => {
 	};
 
 	const onPut = (values, actions) => {
-		console.log(values);
-		console.log(dataClassById.id);
-		putClass(dataClassById.id, values)
+		putTrainer(dataTrainerById.id, values)
 			.then(res => {
 				if (res.status === 200) {
-					getlistClass();
-					setState(initialState);
-					message.success(`Edit Class Success`);
+					getlistTrainer();
 					actions.resetForm();
 					actions.setSubmitting(false);
+					setState(initialState);
+					message.success(`Edit Trainer Success`);
 				}
 			})
 			.catch(err => {
@@ -189,11 +173,11 @@ const Class = () => {
 	};
 
 	const onDelete = id => {
-		deleteClass(id)
+		deleteTrainer(id)
 			.then(res => {
 				if (res.status === 200) {
-					message.error('Class Deleted');
-					getlistClass();
+					message.error('Trainer Deleted');
+					getlistTrainer();
 				}
 			})
 			.catch(err => {
@@ -211,11 +195,11 @@ const Class = () => {
 
 	return (
 		<React.Fragment>
-			<div className={state.hidden ? 'd-none' : 'class'} id="class">
+			<div className={state.hidden ? 'd-none' : 'trainer'} id="trainer">
 				<CustomInputHeader
 					content={
 						<React.Fragment>
-							<button className="btn" onClick={addClass}>
+							<button className="btn" onClick={addTrainer}>
 								New
 							</button>
 							<input
@@ -229,7 +213,7 @@ const Class = () => {
 				/>
 				<TableComponent
 					columns={columns}
-					dataSource={search(dataClass)}
+					dataSource={search(dataTrainer)}
 					pagination={{
 						// pageSize: 25,
 						onChange: e => setPage(e),
@@ -240,17 +224,12 @@ const Class = () => {
 					}}
 				/>
 			</div>
-			{state.addClass && (
-				<FormAddClass
-					onCancelForm={onCancelForm}
-					listCategory={dataCatagory}
-					onSubmit={onSubmit}
-				/>
+			{state.addTrainer && (
+				<FormAddTrainer onCancelForm={onCancelForm} onSubmit={onSubmit} />
 			)}
-			{state.editClass && (
-				<FormEditClass
-					data={dataClassById}
-					listCategory={dataCatagory}
+			{state.editTrainer && (
+				<FormEditTrainer
+					data={dataTrainerById}
 					onCancelForm={onCancelForm}
 					onSubmit={onPut}
 				/>
@@ -258,4 +237,4 @@ const Class = () => {
 		</React.Fragment>
 	);
 };
-export default Class;
+export default Trainer;

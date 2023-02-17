@@ -6,18 +6,14 @@ const phoneRegExp = /^(^\+62|62|^08)(\d{3,4}-?){2}\d{3,4}$/g;
 export const signinSchema = yup.object().shape({
 	email: yup
 		.string()
-		.email('Please enter a valid email')
-		.required('email required'),
-	//   age: yup.number().positive().integer().required("Required"),
+		.email('Please insert a valid email')
+		.required('please insert email'),
+
 	password: yup
 		.string()
 		.min(5)
-		.matches(passwordRules, { message: 'Please create a stronger password' })
-		.required('password required')
-	// confirmPassword: yup
-	// 	.string()
-	// 	.oneOf([yup.ref('password'), null], 'Passwords must match')
-	// 	.required('Required')
+		// .matches(passwordRules, { message: 'Please insert a stronger password' })
+		.required('please insert password')
 });
 
 export const signupSchema = yup.object().shape({
@@ -30,91 +26,11 @@ export const signupSchema = yup.object().shape({
 		.string()
 		.matches(phoneRegExp, 'Phone number is not valid')
 		.required('require'),
-	gender: yup.string().required('Select one of the above button'),
-	placeBirth: yup.string().required('required'),
-	childBirth: yup.string().required('required'),
-	formalSchool: yup.string().required('required'),
-	parentsName: yup.string().required('required'),
-	address: yup.string().required('required'),
-	reasonsJoining: yup.string().required('required'),
-	preferredTime: yup.string().required('Select one of the above button')
-	// childName: '',
-	// email: '',
-	// phoneNumber: '',
-	// gender: '',
-	// placeBirth: '',
-	// childBirth: '',
-	// formalSchool: '',
-	// parentsName: '',
-	// formalSchool: '',
-	// address: '',
-	// reasonsJoining: '',
-	// prefrredTime: ''
-	// password: yup
-	// 	.string()
-	// 	.min(5)
-	// 	.matches(passwordRules, { message: 'Please create a stronger password' })
-	// 	.required('password required'),
-	// confirmPassword: yup
-	// 	.string()
-	// 	.oneOf([yup.ref('password'), null], 'Passwords must match')
-	// 	.required('required')
+	gender: yup.string().required('Select one of gender'),
+	birthPlace: yup.string().required('required'),
+	birthDate: yup.string().required('required'),
+	medicalRecord: yup.string(),
+	Address: yup.string().required('required'),
+	reasonsTraining: yup.string().required('required'),
+	classType: yup.string().required('Select one of the class')
 });
-
-export const absensiSchema = yup.object().shape({
-	email: yup
-		.string()
-		.email('Please enter a valid email')
-		.required('email required'),
-	//   age: yup.number().positive().integer().required("Required"),
-	password: yup
-		.string()
-		.min(5)
-		.matches(passwordRules, { message: 'Please create a stronger password' })
-		.required('password required')
-	// confirmPassword: yup
-	// 	.string()
-	// 	.oneOf([yup.ref('password'), null], 'Passwords must match')
-	// 	.required('Required')
-});
-
-export const oneSchema = yup.object().shape({
-	data: yup.string().required(true)
-});
-
-export const classSchema = yup.object().shape({
-	name: yup.string('Please enter a valid email').required('name required'),
-	description: yup
-		.string('Please enter a valid description')
-		.required('descrition required'),
-	trainer: yup.string().required('Required'),
-	activity: yup.string().required('Required'),
-	start_age: yup
-		.string()
-		// .oneOf(['designer', 'developer', 'manager', 'other'], 'Invalid Job Type')
-		.required('Required'),
-	end_age: yup
-		.string()
-		// .oneOf(['designer', 'developer', 'manager', 'other'], 'Invalid Job Type')
-		.required('Required'),
-	gender: yup
-		.string()
-		.oneOf(['all', 'male', 'female'], 'please choose this one')
-	// .required('Required')
-});
-// jobType: yup
-// .string()
-// .oneOf(["designer", "developer", "manager", "other"], "Invalid Job Type")
-// .required("Required"),
-
-// export const advancedSchema = yup.object().shape({
-// 	username: yup
-// 		.string()
-// 		.min(3, 'Username must be at least 3 characters long')
-// 		.required('Required'),
-// 	jobType: yup
-// 		.string()
-// 		.oneOf(['designer', 'developer', 'manager', 'other'], 'Invalid Job Type')
-// 		.required('Required'),
-// 	acceptedTos: yup.boolean().oneOf([true], 'Please accept the terms of service')
-// });

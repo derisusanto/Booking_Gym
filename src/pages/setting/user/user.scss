@@ -1,4 +1,4 @@
-#location {
+#user {
 	width: 100%;
 
 	.btn {
@@ -35,12 +35,15 @@
 	}
 }
 
-.form-input {
+// .form {
+// 	background-color: #3a36db;
+// }
+
+.form-input-class {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
 }
-
 .bottom-confirm {
 	width: 100%;
 	height: auto;

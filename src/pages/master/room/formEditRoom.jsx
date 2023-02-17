@@ -6,16 +6,17 @@ import { roomSchema } from '../../../schemas/master_schema';
 
 import './room.scss';
 
-export const FormEditRoom = ({ onSubmit, onCancelForm }) => {
+export const FormEditRoom = ({
+	onSubmit,
+	onCancelForm,
+	listLocation,
+	data
+}) => {
 	return (
 		<div className="card-form-input">
 			<Formik
-				initialValues={{
-					name: '',
-					type: '',
-					capacity: '',
-					location: ''
-				}}
+				enableReinitialize={true}
+				initialValues={data}
 				validationSchema={roomSchema}
 				onSubmit={onSubmit}
 			>
@@ -23,43 +24,31 @@ export const FormEditRoom = ({ onSubmit, onCancelForm }) => {
 					<Form className="form">
 						<div className="form-input-room">
 							<CustomInput
-								label="Name"
-								name="name"
+								label="Room Name"
+								name="nama"
 								type="text"
 								className="form-control"
-								placeholder="Name"
+								placeholder="room name"
 							/>
 
 							<CustomInput
-								label="Type"
+								label="Room Type"
 								name="type"
 								type="text"
-								placeholder="Type"
+								placeholder="room type"
 							/>
 							<CustomInput
 								label="Capacity"
 								name="capacity"
 								type="text"
-								placeholder="Capacity"
+								placeholder="capacity"
 							/>
 							<CustomSelect
 								label="Location"
-								name="location"
-								placeholder="Please select a start age"
-								options={[
-									{
-										value: 'jack',
-										label: 'Jack'
-									},
-									{
-										value: 'lucy',
-										label: 'Lucy'
-									},
-									{
-										value: 'Yiminghe',
-										label: 'yiminghe'
-									}
-								]}
+								name="locationId"
+								value={data.locationId}
+								placeholder="please select location"
+								options={listLocation}
 							/>
 						</div>
 						<div className="bottom-confirm">

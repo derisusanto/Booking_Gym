@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Items from './data_navigation';
 import { RightOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu } from 'antd';
+import { Layout, Menu } from 'antd';
 
 import './Layout.scss';
 import CustomModalProfile from '../modal/profile/profile';
@@ -12,13 +12,13 @@ const ComponentLayout = ({ children }) => {
 
 	const { Header, Sider, Content } = Layout;
 	const [collapsed, setCollapsed] = useState(false);
-	const [breadcrumb, setBreadcrumb] = useState('');
+	// const [breadcrumb, setBreadcrumb] = useState('');
 
 	const onClickMenu = info => {
 		const { key } = info;
-		console.log(info);
+
 		navigate(`/${key}`);
-		setBreadcrumb(info.key);
+		// setBreadcrumb(info.key);
 	};
 
 	// const onHandleSignOut = () => {
@@ -65,15 +65,12 @@ const ComponentLayout = ({ children }) => {
 						<span>Michel</span>
 						<RightOutlined className="icon-profile" />
 					</div>
-					{/* <div onClick={() => setCollapsed(!collapsed)}>
-						<RightOutlined />
-					</div> */}
 				</Header>
-				<div style={{ padding: '5px 24px' }}>
+				{/* <div style={{ padding: '5px 24px' }}>
 					<Breadcrumb>
 						<Breadcrumb.Item>{breadcrumb}</Breadcrumb.Item>
 					</Breadcrumb>
-				</div>
+				</div> */}
 				<Content
 					className="site-layout-background"
 					style={{

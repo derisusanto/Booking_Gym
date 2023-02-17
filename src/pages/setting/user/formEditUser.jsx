@@ -1,51 +1,59 @@
 import { Form, Formik } from 'formik';
 
+import { Col, Row } from 'antd';
 import CustomInput from '../../../component/formInput/customInput';
 import CustomSelect from '../../../component/formInput/customSelect';
-import { roomSchema } from '../../../schemas/master_schema';
+import { userSchema } from '../../../schemas/setting';
 
-import './room.scss';
+import './user.scss';
 
-export const FormAddRoom = ({ onSubmit, onCancelForm, listLocation }) => {
+export const FormEditUser = ({
+	onSubmit,
+	onCancelForm,
+	data,
+	listLocation
+}) => {
 	return (
 		<div className="card-form-input">
 			<Formik
-				initialValues={{
-					nama: '',
-					type: '',
-					capacity: '',
-					locationId: ''
-				}}
-				validationSchema={roomSchema}
+				initialValues={data}
+				enableReinitialize={true}
+				validationSchema={userSchema}
 				onSubmit={onSubmit}
 			>
 				{({ isSubmitting }) => (
 					<Form className="form">
-						<div className="form-input-room">
+						<div className="form-input-class">
 							<CustomInput
-								label="Room Name"
+								label="Name"
 								name="nama"
 								type="text"
 								className="form-control"
-								placeholder="room name"
+								placeholder="class name"
 							/>
+							<Row gutter={16}>
+								<Col span={12} md={12}>
+									<CustomInput
+										label="Email"
+										name="email"
+										type="email"
+										placeholder="email"
+									/>
+								</Col>
+								<Col span={12} md={12}>
+									<CustomInput
+										label="Phone Number"
+										name="phoneNumber"
+										type="text"
+										placeholder="phone number"
+									/>
+								</Col>
+							</Row>
 
-							<CustomInput
-								label="Room Type"
-								name="type"
-								type="text"
-								placeholder="room type"
-							/>
-							<CustomInput
-								label="Capacity"
-								name="capacity"
-								type="text"
-								placeholder="capacity"
-							/>
 							<CustomSelect
 								label="Location"
 								name="locationId"
-								placeholder="please select location"
+								placeholder="please select one location"
 								options={listLocation}
 							/>
 						</div>

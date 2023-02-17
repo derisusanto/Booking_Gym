@@ -1,6 +1,7 @@
 import { useField } from 'formik';
 import './formInput.scss';
 import { Select } from 'antd';
+import { IsNullOrEmpty } from '../../utils/IsNullOrEmpety';
 
 const CustomSelect = ({ label, ...props }) => {
 	const [field, meta, helpers] = useField(props);
@@ -16,7 +17,7 @@ const CustomSelect = ({ label, ...props }) => {
 				options={props.options}
 				onChange={e => setValue(e, `${props.name}`)}
 				showSearch
-				value={props.value ? props.value : undefined}
+				value={!IsNullOrEmpty(field.value) ? field.value : undefined}
 				onBlur={meta.touched}
 				optionFilterProp="children"
 				filterOption={(input, option) => (option?.label ?? '').includes(input)}
@@ -25,7 +26,7 @@ const CustomSelect = ({ label, ...props }) => {
 						.toLowerCase()
 						.localeCompare((optionB?.label ?? '').toLowerCase())
 				}
-				// className={meta.touched && meta.error ? 'input-error' : ''}
+				className={meta.touched && meta.error ? 'input-error' : ''}
 			/>
 			{meta.touched && meta.error && <div className="error">{meta.error}</div>}
 		</div>

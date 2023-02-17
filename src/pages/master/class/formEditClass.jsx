@@ -4,23 +4,21 @@ import { Col, Row } from 'antd';
 import CustomInput from '../../../component/formInput/customInput';
 import CustomSelect from '../../../component/formInput/customSelect';
 import CustomRadio from '../../../component/formInput/customRadio';
-import { classSchema } from '../../../schemas/index';
+import { classSchema } from '../../../schemas/master_schema';
 
 import './class.scss';
 
-export const FormEditClass = ({ onSubmit, onCancelForm }) => {
+export const FormEditClass = ({
+	onSubmit,
+	onCancelForm,
+	data,
+	listCategory
+}) => {
 	return (
 		<div className="card-form-input">
 			<Formik
-				initialValues={{
-					name: 'Deri',
-					description: 'Class',
-					trainer: 'lucy',
-					activity: 'lucy',
-					start_age: 'lucy',
-					end_age: 'lucy',
-					gender: 'all'
-				}}
+				enableReinitialize={true}
+				initialValues={data}
 				validationSchema={classSchema}
 				onSubmit={onSubmit}
 			>
@@ -28,108 +26,46 @@ export const FormEditClass = ({ onSubmit, onCancelForm }) => {
 					<Form className="form">
 						<div className="form-input-class">
 							<CustomInput
-								label="Name"
-								name="name"
+								label="Class Name"
+								name="nama"
 								type="text"
 								className="form-control"
-								placeholder="Enter your email@"
+								placeholder="class name"
+							/>
+
+							<CustomSelect
+								label="Category"
+								name="categoryId"
+								value={data.categoryId}
+								placeholder="please select one category"
+								options={listCategory}
 							/>
 
 							<CustomInput
 								label="Description"
 								name="description"
 								type="text"
-								placeholder="Enter your password"
+								placeholder="decriptions"
 							/>
-							<Row gutter={16}>
-								<Col span={12} md={12}>
-									<CustomSelect
-										label="Trainer"
-										name="trainer"
-										placeholder="Search to Select"
-										options={[
-											{
-												value: 'jack',
-												label: 'Jack'
-											},
-											{
-												value: 'lucy',
-												label: 'Lucy'
-											},
-											{
-												value: 'yiminghe',
-												label: 'Yiminghe'
-											}
-										]}
-									/>
-								</Col>
-								<Col span={12} md={12}>
-									<CustomSelect
-										label="Activity"
-										name="activity"
-										placeholder="Please select a activity"
-										options={[
-											{
-												value: 'jack',
-												label: 'Jack'
-											},
-											{
-												value: 'lucy',
-												label: 'Lucy'
-											},
-											{
-												value: 'Yiminghe',
-												label: 'yiminghe'
-											}
-										]}
-									/>
-								</Col>
-							</Row>
-							<Row gutter={16}>
-								<Col span={12} md={12}>
-									<CustomSelect
-										label="Age"
-										name="start_age"
-										placeholder="Please select a start age"
-										options={[
-											{
-												value: 'jack',
-												label: 'Jack'
-											},
-											{
-												value: 'lucy',
-												label: 'Lucy'
-											},
-											{
-												value: 'Yiminghe',
-												label: 'yiminghe'
-											}
-										]}
-									/>
-								</Col>
-								<Col span={12} md={12}>
-									<CustomSelect
-										label="Age"
-										name="end_age"
-										placeholder="Please select a until age"
-										options={[
-											{
-												value: 'jack',
-												label: 'Jack'
-											},
-											{
-												value: 'lucy',
-												label: 'Lucy'
-											},
-											{
-												value: 'Yiminghe',
-												label: 'yiminghe'
-											}
-										]}
-									/>
-								</Col>
-							</Row>
 
+							<Row gutter={16}>
+								<Col span={12} md={12}>
+									<CustomInput
+										label="Start Age"
+										name="startAge"
+										type="text"
+										placeholder="start Age"
+									/>
+								</Col>
+								<Col span={12} md={12}>
+									<CustomInput
+										label="End Age"
+										name="endAge"
+										type="text"
+										placeholder="end Age"
+									/>
+								</Col>
+							</Row>
 							<Row>
 								<Col span={3}>
 									<CustomRadio
@@ -143,8 +79,8 @@ export const FormEditClass = ({ onSubmit, onCancelForm }) => {
 									<CustomRadio
 										label="Male"
 										type="radio"
-										name="gender"
 										value="male"
+										name="gender"
 									/>
 								</Col>
 								<Col span={3}>
@@ -159,6 +95,7 @@ export const FormEditClass = ({ onSubmit, onCancelForm }) => {
 						</div>
 						<div className="bottom-confirm">
 							<button
+								disabled={isSubmitting}
 								type="submit"
 								className="btn-cancel"
 								onClick={onCancelForm}

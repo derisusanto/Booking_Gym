@@ -5,17 +5,12 @@ import CustomInput from '../../../component/formInput/customInput';
 import { locationSchema } from '../../../schemas/master_schema';
 import './location.scss';
 
-export const FormEditLocation = ({ onSubmit, onCancelForm }) => {
+export const FormEditLocation = ({ onSubmit, onCancelForm, data }) => {
 	return (
 		<div className="card-form-input">
 			<Formik
-				initialValues={{
-					name: '',
-					description: '',
-					start_age: '',
-					end_age: '',
-					address: ''
-				}}
+				enableReinitialize={true}
+				initialValues={data}
 				validationSchema={locationSchema}
 				onSubmit={onSubmit}
 			>
@@ -23,24 +18,25 @@ export const FormEditLocation = ({ onSubmit, onCancelForm }) => {
 					<Form className="form">
 						<div className="form-input">
 							<CustomInput
-								label="Name"
-								name="name"
+								label="Location Name"
+								name="nama"
 								type="text"
 								className="form-control"
-								placeholder="Enter your email@"
+								placeholder="location"
+							/>
+							<CustomInput
+								label="Location Code"
+								name="code"
+								type="text"
+								className="form-control"
+								placeholder="location code"
 							/>
 
 							<CustomInput
-								label="Description"
-								name="description"
-								type="text"
-								placeholder="Enter your password"
-							/>
-							<CustomInput
 								label="Address"
-								name="address"
+								name="alamat"
 								type="text"
-								placeholder="Address"
+								placeholder="please input anddress"
 							/>
 							<div>
 								<label>Operational Hour</label>
@@ -48,17 +44,17 @@ export const FormEditLocation = ({ onSubmit, onCancelForm }) => {
 									<Col span={12} md={12}>
 										<CustomInput
 											label=""
-											name="start_age"
+											name="startTime"
 											type="text"
-											placeholder="Start Age"
+											placeholder="start time"
 										/>
 									</Col>
 									<Col span={12} md={12}>
 										<CustomInput
 											label=""
-											name="end_age"
+											name="endTime"
 											type="text"
-											placeholder="End Age"
+											placeholder="end Time"
 										/>
 									</Col>
 								</Row>

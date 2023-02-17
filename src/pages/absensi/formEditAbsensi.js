@@ -7,7 +7,7 @@ export const FromEditbsensi = ({ onSubmit, data }) => {
 		<div className="formInput-absensi">
 			<Formik
 				initialValues={{ email: data.email, password: data.password }}
-				validationSchema={absensiSchema}
+				// validationSchema={absensiSchema}
 				onSubmit={onSubmit}
 			>
 				{({ isSubmitting }) => (

@@ -17,8 +17,7 @@ function App() {
 
 	useEffect(() => {
 		const token = localStorage.getItem('token');
-		if (token === 'login') setIsToken(true);
-		if (token === 'logout') setIsToken(false);
+		setIsToken(token);
 	}, []);
 
 	return (
