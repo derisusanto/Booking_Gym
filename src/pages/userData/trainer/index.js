@@ -129,7 +129,6 @@ const Trainer = () => {
 		getTrainerById(idTrainer)
 			.then(res => {
 				if (res.status === 200) {
-					console.log(res);
 					const data = res.data.data;
 
 					setDataTrainerById({

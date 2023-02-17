@@ -137,6 +137,7 @@ const Room = () => {
 			})
 			.catch(err => {
 				console.log(err);
+				actions.setSubmitting(false);
 			});
 	};
 

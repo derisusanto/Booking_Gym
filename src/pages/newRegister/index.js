@@ -79,7 +79,6 @@ const NewRegister = () => {
 		listNewMember()
 			.then(res => {
 				if (res.status === 200) {
-					console.log(res);
 					const dataTemp = res.data.data.map((item, index) => ({
 						key: index,
 						id: item.id,

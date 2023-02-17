@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import Absensi from '../pages/absensi';
 import Category from '../pages/master/category';
 

@@ -137,8 +137,8 @@ const Class = () => {
 				}
 			})
 			.catch(err => {
-				console.log(err);
 				message.error(`${err?.message}`);
+				actions.setSubmitting(false);
 			});
 	};
 
@@ -171,8 +171,6 @@ const Class = () => {
 	};
 
 	const onPut = (values, actions) => {
-		console.log(values);
-		console.log(dataClassById.id);
 		putClass(dataClassById.id, values)
 			.then(res => {
 				if (res.status === 200) {
@@ -185,6 +183,7 @@ const Class = () => {
 			})
 			.catch(err => {
 				message.error(`${err.response?.data?.message}`);
+				actions.setSubmitting(false);
 			});
 	};
 
