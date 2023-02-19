@@ -14,6 +14,7 @@ export const CustomModal = ({
 			open={show}
 			onCancel={onHide}
 			footer={footer}
+			maskClosable={false}
 		>
 			{content}
 		</Modal>

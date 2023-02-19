@@ -25,6 +25,7 @@ import { listMember, listTrainer } from '../../service/userData';
 import {
 	addMemberOnSchedule,
 	createSchedule,
+	deletedSchedule,
 	deleteMember,
 	detailScheduleById,
 	getClassByIdCategory,
@@ -239,9 +240,8 @@ const Schedule = () => {
 						trainer: detail.trainer?.nama
 					});
 					setMembers(detail.member_schedules);
+					setIsLoadingForm(false);
 				}
-				console.log(res);
-				setIsLoadingForm(false);
 			})
 			.catch(err => {
 				setIsLoadingForm(false);
@@ -303,6 +303,22 @@ const Schedule = () => {
 			});
 	};
 
+	const onDeleteSchedule = scheduleId => {
+		deletedSchedule(scheduleId)
+			.then(res => {
+				console.log(res);
+				if (res.status === 200) {
+					getDataSchedule();
+					message.success('schedule deleted');
+					setState({ ...state, formBooking: false });
+				}
+			})
+			.catch(err => {
+				console.log(err);
+				message.error('cannot deleted member ');
+			});
+	};
+
 	const { components } = useMemo(
 		() => ({
 			components: {
@@ -356,6 +372,8 @@ const Schedule = () => {
 					max={new Date(0, 0, 0, 22, 0)} // Max will be 6.00 PM!
 					onSelectEvent={events => onSelectEvent(events)}
 					onSelectSlot={onSelectSlot}
+					onDoubleClickEvent={false}
+					onSelecting={slot => false}
 					eventPropGetter={EventPropGetter}
 				/>
 			</div>
@@ -391,7 +409,9 @@ const Schedule = () => {
 					onSetMember={onSetMember}
 					detailSchedule={detailBooking}
 					members={members}
+					isLoadingForm={isLoadingForm}
 					deleteMemberOnSchedule={deleteMemberOnSchedule}
+					onDeleteSchedule={onDeleteSchedule}
 				/>
 			)}
 		</React.Fragment>

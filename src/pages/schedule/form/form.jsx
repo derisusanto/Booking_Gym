@@ -1,4 +1,5 @@
 import React from 'react';
+import { Popconfirm } from 'antd';
 import { CustomModal } from '../../../component/modal/customModal/customModal';
 
 import FormBooking from './formBooking/formBooking';
@@ -8,7 +9,6 @@ const Form = ({
 	show,
 	onHide,
 	listCategory,
-
 	listClass,
 	listTrainer,
 	listTime,
@@ -27,7 +27,9 @@ const Form = ({
 	onSetMember,
 	members,
 	detailSchedule,
-	deleteMemberOnSchedule
+	deleteMemberOnSchedule,
+	isLoadingForm,
+	onDeleteSchedule
 }) => {
 	return (
 		<CustomModal
@@ -58,24 +60,38 @@ const Form = ({
 						detailSchedule={detailSchedule}
 						members={members}
 						deleteMemberOnSchedule={deleteMemberOnSchedule}
+						isLoadingForm={isLoadingForm}
 					/>
 				)
 			}
 			footer={
-				<div className="bottom-confirm">
-					<button className="btn-cancel" onClick={onHide}>
-						Close
-					</button>
-					{isFormBooking ? (
+				isFormBooking ? (
+					<div className="bottom-confirm">
+						<button className="btn-cancel" onClick={onHide}>
+							Close
+						</button>
+
 						<button className="btn-confirm" onClick={onCreate}>
 							Save
 						</button>
-					) : (
+					</div>
+				) : (
+					<div className="bottom-confirm">
+						<Popconfirm
+							title="Delete the task"
+							description="Are you sure to delete this task?"
+							okText="OK"
+							cancelText="No"
+							onConfirm={() => onDeleteSchedule(detailSchedule.scheduleId)}
+						>
+							<button className="btn-delete">Delete</button>
+						</Popconfirm>
+
 						<button className="btn-confirm" onClick={onHide}>
 							Save
 						</button>
-					)}
-				</div>
+					</div>
+				)
 			}
 		/>
 	);

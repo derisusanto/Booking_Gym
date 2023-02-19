@@ -146,7 +146,7 @@ const NewRegister = () => {
 					actions.resetForm();
 					actions.setSubmitting(false);
 					setState(initialState);
-					message.success(`Edit Trainer Success`);
+					message.success(`Edit Member Success`);
 				}
 			})
 			.catch(err => {
@@ -189,7 +189,7 @@ const NewRegister = () => {
 				<FormEditMember
 					data={dataMemberById}
 					onCancelForm={onCancelForm}
-					// onSubmit={onPut}
+					onSubmit={onPut}
 				/>
 			)}
 		</React.Fragment>

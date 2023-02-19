@@ -1,8 +1,3 @@
-import { Form, Formik } from 'formik';
-import { oneSchema } from '../../schemas/index';
-
-import CustomInput from '../../component/formInput/customInput';
-
 import './customHeader.scss';
 
 const CustomInputHeader = ({ content, position }) => {

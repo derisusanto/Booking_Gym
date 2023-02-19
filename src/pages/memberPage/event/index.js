@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import TableComponent from '../../../component/table/TableData';
 import CustomInputHeader from '../../../component/customInputHeader/customInputHeader';
-
+import { message } from 'antd';
 import { ICON } from '../../../assets/icons/icons';
 
 import './event.scss';
 import { SimpleCurrency } from '../../../utils/simpleCurrency';
 import { listEventMemberById } from '../../../service/member';
+import { DetailEvent } from './detailEvent/detailEvent';
 
 const EventMember = () => {
 	const columns = [
@@ -49,7 +50,7 @@ const EventMember = () => {
 					<ICON.EDIT
 						width={30}
 						onClick={() => {
-							// showEvent(item.id);
+							uploadPaymentRecipt(item.id);
 						}}
 					/>
 				</div>
@@ -57,9 +58,15 @@ const EventMember = () => {
 		}
 	];
 
+	const [state, setState] = useState({
+		uploadPayment: false
+	});
+
 	const userId = localStorage.getItem('userId');
 	const [dataEvent, setDataEvent] = useState([]);
 	const [page, setPage] = useState(1);
+
+	const [imageURI, setImageURI] = useState(null);
 
 	const [query, setQuery] = useState('');
 	const keys = ['event'];
@@ -77,6 +84,7 @@ const EventMember = () => {
 		listEventMemberById(userId)
 			.then(res => {
 				if (res.status === 200) {
+					console.log(res);
 					const dataTemp = res.data.data.map((item, index) => ({
 						key: index,
 						id: item.id,
@@ -92,6 +100,34 @@ const EventMember = () => {
 			.catch(err => {
 				console.log(err);
 			});
+	};
+
+	const handleImage = e => {
+		let file = e.target.files[0];
+		let reader = new FileReader();
+
+		const { size, type } = file;
+
+		if (!['image/jpeg', 'image/png', 'img/jpg'].includes(type)) {
+			message.error('You can only upload JPG/PNG file!');
+			setImageURI(null);
+		} else if (file && size >= 2000000) {
+			message.error('Image must smaller than 2MB!');
+			setImageURI(null);
+		} else {
+			reader.onload = () => {
+				setImageURI(URL.createObjectURL(file));
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+
+	const uploadPaymentRecipt = () => {
+		console.log('masuk');
+		setState(prevState => ({
+			...prevState,
+			uploadPayment: !prevState.uploadPayment
+		}));
 	};
 
 	return (
@@ -123,6 +159,16 @@ const EventMember = () => {
 					}}
 				/>
 			</div>
+			{state.uploadPayment && (
+				<DetailEvent
+					show={state.uploadPayment}
+					// data={detailEvent}
+					onHide={() => setState({ ...state, uploadPayment: false })}
+					imageURI={imageURI}
+					onChangeImage={handleImage}
+					// onRegister={registEvent}
+				/>
+			)}
 		</React.Fragment>
 	);
 };

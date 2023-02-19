@@ -4,13 +4,14 @@ import { signupSchema } from '../../../schemas';
 import CustomInput from '../../../component/formInput/customInput';
 import CustomTextArea from '../../../component/formInput/customTextArea';
 import CustomSelect from '../../../component/formInput/customSelect';
+import { memberSchema } from '../../../schemas/userData';
 
 const FormEditMember = ({ onSubmit, onCancelForm, data }) => {
 	return (
 		<div className="card-form-input">
 			<Formik
 				initialValues={data}
-				validationSchema={signupSchema}
+				validationSchema={memberSchema}
 				onSubmit={onSubmit}
 			>
 				{({ isSubmitting }) => (

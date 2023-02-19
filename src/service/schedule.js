@@ -23,3 +23,7 @@ export const deleteMember = data => {
 export const detailScheduleById = idSchedule => {
 	return FETCH.get(`/schedule/getDetail/${idSchedule}`);
 };
+
+export const deletedSchedule = idSchedule => {
+	return FETCH.put(`/schedule/deleteSchedule/${idSchedule}`);
+};

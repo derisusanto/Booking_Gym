@@ -108,6 +108,29 @@
 		}
 	}
 
+	.btn-delete {
+		width: min(100%, 100px);
+		height: 40px;
+		border: 1px solid #ec7063;
+		border-radius: 10px;
+		outline: none;
+
+		background-color: #fff;
+
+		font-family: 'DM Sans';
+		font-style: normal;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 21px;
+		color: #ec7063;
+
+		&:disabled {
+			background-color: #d3d3d3;
+			opacity: 0.5;
+			pointer-events: none;
+		}
+	}
+
 	.btn-confirm {
 		width: min(100%, 100px);
 		height: 40px;

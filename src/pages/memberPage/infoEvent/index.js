@@ -10,6 +10,7 @@ import { listEvent } from '../../../service/master';
 import './infoEvent.scss';
 import { SimpleCurrency } from '../../../utils/simpleCurrency';
 import { memberRegistEvent } from '../../../service/member';
+import { DetailEvent } from './detailEvent/detailEvent';
 
 const InfoEventMember = () => {
 	const columns = [
@@ -47,33 +48,25 @@ const InfoEventMember = () => {
 			key: 'x',
 			responsive: ['sm'],
 			align: 'center',
-			render: (record, item) => (
+			render: (record, item, index) => (
 				<div className="action-button">
-					<ICON.EDIT
-						width={30}
-						onClick={() => {
-							registEvent(item.id);
-						}}
-					/>
+					<ICON.EDIT width={30} onClick={() => showDetailEvent(index)} />
 				</div>
 			)
 		}
 	];
 
 	const initialState = {
-		addEvent: false,
-		editEvent: false,
+		showEvent: false,
 		hidden: false
 	};
 
 	const [state, setState] = useState({
-		addEvent: false,
-		editEvent: false,
-		hidden: false
+		showEvent: false
 	});
 
 	const [dataEvent, setDataEvent] = useState([]);
-	const [dataEventById, setDataEventById] = useState({});
+	const [detailEvent, setDetailEvent] = useState({});
 	const [page, setPage] = useState(1);
 
 	const [query, setQuery] = useState('');
@@ -109,6 +102,15 @@ const InfoEventMember = () => {
 			});
 	};
 
+	const showDetailEvent = index => {
+		let tempEvent = [...dataEvent];
+		setDetailEvent(tempEvent[index]);
+		setState(prevState => ({
+			...prevState,
+			showEvent: !prevState.showEvent
+		}));
+	};
+
 	const registEvent = eventId => {
 		const memberId = localStorage.getItem('userId');
 		const data = {
@@ -117,32 +119,16 @@ const InfoEventMember = () => {
 		};
 		memberRegistEvent(data)
 			.then(res => {
-				console.log(res);
 				if (res.status === 200) {
 					message.success('Registered Event Success');
 					getlistEvent();
+					setState({ ...state, showEvent: false });
 				}
 			})
 			.catch(err => {
 				message.error('Regstered Event Failed');
 				console.log(err);
 			});
-	};
-
-	const addEvent = () => {
-		setState(prevState => ({
-			...prevState,
-			addEvent: !prevState.addEvent,
-			hidden: !prevState.hidden
-		}));
-	};
-
-	const onCancelForm = () => {
-		setState({
-			addEvent: false,
-			editClass: false,
-			hidden: false
-		});
 	};
 
 	return (
@@ -174,6 +160,14 @@ const InfoEventMember = () => {
 					}}
 				/>
 			</div>
+			{state.showEvent && (
+				<DetailEvent
+					show={state.showEvent}
+					data={detailEvent}
+					onHide={() => setState({ ...state, showEvent: false })}
+					onRegister={registEvent}
+				/>
+			)}
 		</React.Fragment>
 	);
 };
