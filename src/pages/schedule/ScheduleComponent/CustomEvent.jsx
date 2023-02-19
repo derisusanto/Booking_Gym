@@ -30,22 +30,23 @@ const CustomEvent = props => {
 					<div
 						style={{
 							backgroundColor: '#EDBB99',
-							borderRadius: '8px 8px 0px 0px',
+							borderRadius: '8px',
 							width: '100%',
-							height: '30px',
+							height: 'auto',
+							padding: '8px 5px',
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center'
 						}}
 					>
-						Bulu Tangkis
+						{title}
 					</div>
-					<div className="event-title ">
+					{/* <div className="event-title ">
 						<span>&#128520;</span>: <span>{title}</span>
 					</div>
 					<div className="event-title">
 						<span>&#128512;</span>: <span>2 dari 6</span>
-					</div>
+					</div> */}
 				</div>
 
 				{/* <div className="participan">

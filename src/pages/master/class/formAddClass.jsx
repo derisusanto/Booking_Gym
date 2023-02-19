@@ -8,7 +8,12 @@ import { classSchema } from '../../../schemas/master_schema';
 
 import './class.scss';
 
-export const FormAddClass = ({ onSubmit, onCancelForm, listCategory }) => {
+export const FormAddClass = ({
+	onSubmit,
+	onCancelForm,
+	listCategory,
+	listDuration
+}) => {
 	return (
 		<div className="card-form-input">
 			<Formik
@@ -18,7 +23,8 @@ export const FormAddClass = ({ onSubmit, onCancelForm, listCategory }) => {
 					categoryId: '',
 					startAge: '',
 					endAge: '',
-					gender: ''
+					gender: '',
+					durasi: ''
 				}}
 				validationSchema={classSchema}
 				onSubmit={onSubmit}
@@ -39,6 +45,13 @@ export const FormAddClass = ({ onSubmit, onCancelForm, listCategory }) => {
 								name="categoryId"
 								placeholder="please select one category"
 								options={listCategory}
+							/>
+
+							<CustomSelect
+								label="Duration (minutes)"
+								name="durasi"
+								placeholder="please select one category"
+								options={listDuration}
 							/>
 
 							<CustomInput

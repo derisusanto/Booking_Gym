@@ -7,12 +7,14 @@ import CustomRadio from '../../../component/formInput/customRadio';
 import { classSchema } from '../../../schemas/master_schema';
 
 import './class.scss';
+import CustomTextArea from '../../../component/formInput/customTextArea';
 
 export const FormEditClass = ({
 	onSubmit,
 	onCancelForm,
 	data,
-	listCategory
+	listCategory,
+	listDuration
 }) => {
 	return (
 		<div className="card-form-input">
@@ -36,12 +38,20 @@ export const FormEditClass = ({
 							<CustomSelect
 								label="Category"
 								name="categoryId"
-								value={data.categoryId}
+								// value={data.categoryId}
 								placeholder="please select one category"
 								options={listCategory}
 							/>
 
-							<CustomInput
+							<CustomSelect
+								label="Duration (minutes)"
+								name="durasi"
+								value={data.durasi}
+								placeholder="please select one category"
+								options={listDuration}
+							/>
+
+							<CustomTextArea
 								label="Description"
 								name="description"
 								type="text"

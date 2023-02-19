@@ -20,7 +20,7 @@ const items = [
 		label: 'Dashboard'
 	},
 	{
-		key: 'Schedule',
+		key: 'Schedule/Location',
 		icon: <ScheduleOutlined />,
 		label: 'Schedule'
 	},
@@ -44,6 +44,10 @@ const items = [
 			{
 				key: 'Master/Location',
 				label: 'Location'
+			},
+			{
+				key: 'Master/Event',
+				label: 'Event'
 			}
 		]
 	},
@@ -106,6 +110,17 @@ const items = [
 		key: 'Upload',
 		icon: <CloudUploadOutlined />,
 		label: 'Upload'
+	},
+	{
+		key: 'Member/Info/Event',
+		icon: <CloudUploadOutlined />,
+		label: 'Member Info Event'
+	},
+	{
+		key: 'Member/Event',
+		icon: <CloudUploadOutlined />,
+		label: 'Member Event'
 	}
+	//
 ];
 export default items;

@@ -1,4 +1,5 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 
 import format from 'date-fns/format';
@@ -17,33 +18,109 @@ import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import Form from './form/form';
-import { listClass } from '../../service/master';
+import { ListTime } from './listTime';
+import { listCategory } from '../../service/master';
 import './schedule.scss';
+import { listMember, listTrainer } from '../../service/userData';
+import {
+	addMemberOnSchedule,
+	createSchedule,
+	deleteMember,
+	detailScheduleById,
+	getClassByIdCategory,
+	getScheduleById
+} from '../../service/schedule';
+import { getFormattedDate } from '../../utils/scheduleFormatDate';
+import formatOldDate, { FormatDate, FormatTime } from '../../utils/timeFormat';
+import { message } from 'antd';
 
 const Schedule = () => {
+	const { idLocation } = useParams();
+
 	let formats = {
 		timeGutterFormat: 'HH:mm'
 	};
 
 	const [state, setState] = useState({ formBooking: false });
+	const [dataBooking, setDataBooking] = useState({
+		trainerId: '',
+		classId: '',
+		startTime: '',
+		classDate: '',
+		untilDate: '',
+		locationId: idLocation,
+		endTime: '',
+		repeat: '',
+		isRepeat: false
+	});
+	const [detailBooking, setDetailBooking] = useState({});
 
 	const [events, setEvents] = useState([]);
+	const [dataMember, setDataMember] = useState([]);
+	const [dataCategory, setDataCategory] = useState([]);
 	const [dataClass, setDataClass] = useState([]);
+	const [dataTrainer, setDataTrainer] = useState([]);
+	const [members, setMembers] = useState([]);
 
 	const [time, setTime] = useState({ startTime: '', endTime: '' });
+	const [idMember, setIdMember] = useState('');
 
 	const [isFormBooking, setIsFormBooking] = useState(true);
 	const [isLoadingForm, setIsLoadingForm] = useState(false);
 
-	const getListClass = () => {
-		listClass()
+	useEffect(() => {
+		getDataSchedule();
+		getDataMember();
+	}, []);
+
+	const getDataSchedule = () => {
+		getScheduleById(idLocation)
+			.then(res => {
+				if (res.status === 200) {
+					console.log(res);
+					const dataTemp = res.data?.data.map(schedule => ({
+						id: schedule.id,
+						title: schedule.class?.nama,
+						start: new Date(
+							getFormattedDate(schedule.classDate, schedule.startTime)
+						),
+						end: new Date(
+							getFormattedDate(schedule.classDate, schedule.endTime)
+						)
+					}));
+					setEvents(dataTemp);
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+
+	const getDataMember = () => {
+		listMember()
+			.then(res => {
+				if (res.status === 200) {
+					const dataTemp = res.data.data.map(item => ({
+						label: item.childName,
+						value: item.id
+					}));
+					setDataMember(dataTemp);
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+
+	const getlistCategory = () => {
+		listCategory()
 			.then(res => {
 				if (res.status === 200) {
 					const dataTemp = res.data.data.map(item => ({
 						label: item.nama,
 						value: item.id
 					}));
-					setDataClass(dataTemp);
+					setDataCategory(dataTemp);
 					setIsLoadingForm(false);
 				}
 			})
@@ -52,49 +129,178 @@ const Schedule = () => {
 			});
 	};
 
-	const onSelectClass = value => {
-		console.log(value);
-	};
-	const onCheckRepeat = e => {
-		const { checked } = e.target;
-		console.log(checked);
-	};
-
-	const onCreate = () => {
-		// console.log(new Date(end).getMinutes() + 30);
-		const data = {
-			title: 'test',
-			start: time.startTime,
-			end: time.endTime
-		};
-		console.log(data);
-		setEvents([...events, data]);
-		setState({ ...state, formBooking: false });
+	const getlistTrainer = () => {
+		listTrainer()
+			.then(res => {
+				if (res.status === 200) {
+					const dataTemp = res.data.data.map(item => ({
+						label: item.nama,
+						value: item.id
+					}));
+					setDataTrainer(dataTemp);
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	};
 
-	const onSelectEvent = e => {
-		console.log(e);
-		setIsFormBooking(false);
-		setIsLoadingForm(true);
-		setState(prevState => ({
-			...prevState,
-			formBooking: !prevState.formBooking
-		}));
+	const getlistClass = categoryId => {
+		getClassByIdCategory(categoryId)
+			.then(res => {
+				if (res.status === 200) {
+					const dataTemp = res.data.data.map(item => ({
+						label: item.nama,
+						value: `${item.id}.${item.durasi}`
+					}));
+
+					setDataClass(dataTemp);
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+
+	const onSelectCategory = idCategory => {
+		getlistClass(idCategory);
+		setDataClass([]);
+		setDataBooking({ ...dataBooking, classId: null });
+	};
+
+	const onSelectClass = e => {
+		const val = e.split('.');
+		const idClass = parseInt(val[0]);
+		let endTime = new Date(time.startTime).getTime() + val[1] * 60000;
+
+		setTime({ ...time, endTime: new Date(endTime) });
+		setDataBooking({
+			...dataBooking,
+			classId: idClass,
+			endTime: FormatTime(endTime)
+		});
 	};
 
 	const onSelectSlot = e => {
+		console.log(e);
 		const { action, start, end } = e;
 		if (action === 'click') {
 			setTime({ startTime: start, endTime: end });
+			setDataBooking({
+				...dataBooking,
+				startTime: FormatTime(start),
+				classDate: formatOldDate(start)
+			});
 			setIsFormBooking(true);
 			setIsLoadingForm(true);
-			getListClass();
+			getlistCategory();
+			getlistTrainer();
 			setState(prevState => ({
 				...prevState,
 				formBooking: !prevState.formBooking
 			}));
 		}
 		// console.log(new Date(end).getMinutes() + 30);
+	};
+
+	const onCreate = () => {
+		createSchedule(dataBooking)
+			.then(res => {
+				if (res.status === 201) {
+					setState({ ...state, formBooking: false });
+					message.success('Create Schedule Success');
+					getDataSchedule();
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+
+	const onSelectEvent = e => {
+		const { id } = e;
+		setIsFormBooking(false);
+		setIsLoadingForm(true);
+		setState(prevState => ({
+			...prevState,
+			formBooking: true
+		}));
+
+		detailScheduleById(id)
+			.then(res => {
+				if (res.status === 200) {
+					let detail = res.data.data;
+					setDetailBooking({
+						scheduleId: detail.id,
+						class: detail.class?.nama,
+						classDate: detail.classDate,
+						startTime: detail.startTime,
+						endTime: detail.endTime,
+						trainer: detail.trainer?.nama
+					});
+					setMembers(detail.member_schedules);
+				}
+				console.log(res);
+				setIsLoadingForm(false);
+			})
+			.catch(err => {
+				setIsLoadingForm(false);
+				message.error(`${err.response.data.message}`);
+				setState(prevState => ({
+					...prevState,
+					formBooking: false
+				}));
+			});
+	};
+
+	const onSetMember = scheduleId => {
+		const dataTemp = dataMember.find(
+			elemen => elemen.value === parseInt(idMember)
+		);
+
+		if (dataTemp) {
+			const dataFound = members.find(
+				elemen => elemen.member.id === dataTemp.value
+			);
+			console.log(dataFound);
+			if (!dataFound) {
+				// setMembers([...members, { id: dataTemp.value, nama: dataTemp.label }]);
+				let data = { scheduleId: scheduleId, memberId: dataTemp.value };
+
+				addMemberOnSchedule(data)
+					.then(res => {
+						console.log(res);
+						onSelectEvent({ id: scheduleId });
+						message.success('add member success');
+					})
+					.catch(err => {
+						console.log(err);
+						message.error('cannot add member ');
+					});
+			}
+			if (dataFound) {
+				message.error('member already exist');
+			}
+		}
+	};
+
+	const deleteMemberOnSchedule = (memberId, scheduleId) => {
+		console.log(memberId);
+		console.log(scheduleId);
+		let data = {
+			memberId: memberId,
+			scheduleId: scheduleId
+		};
+		deleteMember(data)
+			.then(res => {
+				console.log(res);
+				onSelectEvent({ id: scheduleId });
+				message.success('member deleted');
+			})
+			.catch(err => {
+				console.log(err);
+				message.error('cannot deleted member ');
+			});
 	};
 
 	const { components } = useMemo(
@@ -115,7 +321,7 @@ const Schedule = () => {
 	const EventPropGetter = useCallback(() => {
 		return {
 			style: {
-				backgroundColor: '#F0F6AA',
+				backgroundColor: '#85C1E9',
 				color: 'black',
 				width: '100%',
 				height: 'auto',
@@ -157,11 +363,35 @@ const Schedule = () => {
 				<Form
 					show={state.formBooking}
 					onHide={() => setState({ ...state, formBooking: false })}
+					listCategory={dataCategory}
 					listClass={dataClass}
+					listTrainer={dataTrainer}
+					listTime={ListTime}
+					startTime={time.startTime}
+					endTime={time.endTime}
 					isFormBooking={isFormBooking}
+					onSelectCategory={onSelectCategory}
 					onSelectClass={onSelectClass}
-					onCheckRepeat={onCheckRepeat}
+					onSelectTrainer={value =>
+						setDataBooking({ ...dataBooking, trainerId: value })
+					}
+					onSelectRepeat={value =>
+						setDataBooking({ ...dataBooking, repeat: value })
+					}
+					onCheckRepeat={e =>
+						setDataBooking({ ...dataBooking, isRepeat: e.target.checked })
+					}
+					onUntilDate={e =>
+						setDataBooking({ ...dataBooking, untilDate: e.target.value })
+					}
 					onCreate={onCreate}
+					//add booking
+					listMember={dataMember}
+					onCheckMember={e => setIdMember(e)}
+					onSetMember={onSetMember}
+					detailSchedule={detailBooking}
+					members={members}
+					deleteMemberOnSchedule={deleteMemberOnSchedule}
 				/>
 			)}
 		</React.Fragment>

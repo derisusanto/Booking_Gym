@@ -6,16 +6,30 @@ import CustomInput from '../../../../component/formInput/customWithOutFormik/cus
 import CustomSelect from '../../../../component/formInput/customWithOutFormik/customSelect';
 
 import './formBooking.scss';
+import { FormatDate, FormatTime } from '../../../../utils/timeFormat';
 
-const FormBooking = ({ listClass, onSelectClass, onCheckRepeat }) => {
+const FormBooking = ({
+	listCategory,
+	listClass,
+	listTrainer,
+	listTime,
+	startTime,
+	endTime,
+	onSelectRepeat,
+	onSelectTrainer,
+	onSelectCategory,
+	onUntilDate,
+	onSelectClass,
+	onCheckRepeat
+}) => {
 	return (
 		<div id="form-booking">
 			<CustomSelect
 				name="categoryId"
 				label="Choose Category"
 				placeholder="please select one class"
-				onChange={onSelectClass}
-				options={listClass}
+				onChange={onSelectCategory}
+				options={listCategory}
 			/>
 			<CustomSelect
 				name="classId"
@@ -23,27 +37,37 @@ const FormBooking = ({ listClass, onSelectClass, onCheckRepeat }) => {
 				placeholder="please select one class"
 				onChange={onSelectClass}
 				options={listClass}
+				value=""
+			/>
+			<CustomSelect
+				name="trainerId"
+				label="Choose Trainer"
+				placeholder="please select one class"
+				value={null}
+				onChange={onSelectTrainer}
+				options={listTrainer}
 			/>
 
-			<CustomCheckbox name="repeat" label="Repeat" onChange={onCheckRepeat} />
+			<CustomCheckbox name="isRepeat" label="Repeat" onChange={onCheckRepeat} />
 
 			<Row gutter={16}>
 				<Col span={12} md={12}>
 					<CustomSelect
-						name="classId"
-						label="Choose Class"
+						name="repeat"
+						label="Choose Time"
 						placeholder="please select one class"
-						onChange={onSelectClass}
-						options={listClass}
+						onChange={onSelectRepeat}
+						options={listTime}
 					/>
 				</Col>
 				<Col span={12} md={12}>
 					<CustomInput
-						label="Location Code"
-						name="date"
+						label="Until Date"
+						name="untilDate"
 						type="date"
 						className="form-control"
 						placeholder="location code"
+						onChange={onUntilDate}
 					/>
 				</Col>
 			</Row>
@@ -52,7 +76,10 @@ const FormBooking = ({ listClass, onSelectClass, onCheckRepeat }) => {
 					<ClockCircleOutlined style={{ fontSize: '50px', color: 'hotpink' }} />
 				</div>
 				<div className="booking-tim-description">
-					<span>Thursday. December 5 12:00pm - 1:00pm</span>
+					<span>
+						{FormatDate(startTime)} | {FormatTime(startTime)} -{' '}
+						{FormatTime(endTime)}
+					</span>
 					<span>Time zone - Does not repeat</span>
 				</div>
 			</div>

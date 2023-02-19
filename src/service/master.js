@@ -80,3 +80,24 @@ export const putRoom = (id, data) => {
 export const deleteRoom = id => {
 	return FETCH.delete(`/room/delete/${id}`);
 };
+
+//Event
+export const createEvent = data => {
+	return FETCH.post(`/event/create`, data);
+};
+
+export const listEvent = () => {
+	return FETCH.get(`/event/get`);
+};
+
+export const getEventById = id => {
+	return FETCH.get(`/event/getEvent/${id}`);
+};
+
+export const putEvent = (id, data) => {
+	return FETCH.put(`/event/update/${id}`, data);
+};
+
+export const deleteEvent = id => {
+	return FETCH.delete(`/event/delete/${id}`);
+};

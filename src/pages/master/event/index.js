@@ -2,23 +2,24 @@ import React, { useState, useEffect } from 'react';
 import TableComponent from '../../../component/table/TableData';
 import CustomInputHeader from '../../../component/customInputHeader/customInputHeader';
 
-import { FormEditClass } from './formEditClass';
-import { FormAddClass } from './formAddClass';
+import { FormAddEvent } from './formAddEvent';
+import { FormEditEvent } from './formEditEvent';
+
 import { message } from 'antd';
 import { ICON } from '../../../assets/icons/icons';
 
 import {
-	createClass,
-	deleteClass,
-	getClassById,
-	listCategory,
-	listClass,
-	putClass
+	createEvent,
+	getEventById,
+	listEvent,
+	putEvent,
+	deleteEvent
 } from '../../../service/master';
 
-import './class.scss';
-import { listDuration } from './listDuration';
-const Class = () => {
+import './event.scss';
+import { SimpleCurrency } from '../../../utils/simpleCurrency';
+
+const Event = () => {
 	const columns = [
 		{
 			title: 'No',
@@ -27,8 +28,21 @@ const Class = () => {
 		},
 
 		{
-			title: 'Class',
-			dataIndex: 'class'
+			title: 'Event',
+			dataIndex: 'event'
+		},
+		{
+			title: 'Start Date',
+			dataIndex: 'startDate'
+		},
+		{
+			title: 'End Date',
+			dataIndex: 'endDate'
+		},
+		{
+			title: 'Price',
+			dataIndex: 'price',
+			render: (record, item) => <span>Rp {item.price}</span>
 		},
 
 		{
@@ -42,7 +56,7 @@ const Class = () => {
 					<ICON.EDIT
 						width={30}
 						onClick={() => {
-							showClass(item.id);
+							showEvent(item.id);
 						}}
 					/>
 					<ICON.DELETE
@@ -57,24 +71,23 @@ const Class = () => {
 	];
 
 	const initialState = {
-		addClass: false,
-		editClass: false,
+		addEvent: false,
+		editEvent: false,
 		hidden: false
 	};
 
 	const [state, setState] = useState({
-		addClass: false,
-		editClass: false,
+		addEvent: false,
+		editEvent: false,
 		hidden: false
 	});
 
-	const [dataCatagory, setDataCategory] = useState([]);
-	const [dataClass, setDataClass] = useState([]);
-	const [dataClassById, setDataClassById] = useState({});
+	const [dataEvent, setDataEvent] = useState([]);
+	const [dataEventById, setDataEventById] = useState({});
 	const [page, setPage] = useState(1);
 
 	const [query, setQuery] = useState('');
-	const keys = ['class'];
+	const keys = ['event'];
 	const search = data => {
 		return data.filter(item =>
 			keys.some(key => item[key].toLowerCase().includes(query))
@@ -82,36 +95,22 @@ const Class = () => {
 	};
 
 	useEffect(() => {
-		getlistCategory();
-		getlistClass();
+		getlistEvent();
 	}, []);
 
-	const getlistCategory = () => {
-		listCategory()
-			.then(res => {
-				if (res.status === 200) {
-					const dataTemp = res.data.data.map(item => ({
-						label: item.nama,
-						value: item.id
-					}));
-					setDataCategory(dataTemp);
-				}
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	};
-
-	const getlistClass = () => {
-		listClass()
+	const getlistEvent = () => {
+		listEvent()
 			.then(res => {
 				if (res.status === 200) {
 					const dataTemp = res.data.data.map((item, index) => ({
 						key: index,
 						id: item.id,
-						class: item.nama
+						event: item.nama,
+						startDate: item.startDate,
+						endDate: item.endDate,
+						price: SimpleCurrency(item.biaya)
 					}));
-					setDataClass(dataTemp);
+					setDataEvent(dataTemp);
 				}
 			})
 			.catch(err => {
@@ -119,20 +118,21 @@ const Class = () => {
 			});
 	};
 
-	const addClass = () => {
+	const addEvent = () => {
 		setState(prevState => ({
 			...prevState,
-			addClass: !prevState.addClass,
+			addEvent: !prevState.addEvent,
 			hidden: !prevState.hidden
 		}));
 	};
 
 	const onSubmit = (values, actions) => {
-		createClass(values)
+		createEvent(values)
 			.then(res => {
 				if (res.status === 201) {
+					getlistEvent();
 					setState(initialState);
-					message.success('Add Class Success');
+					message.success('Add Event Success');
 					actions.resetForm();
 					actions.setSubmitting(false);
 				}
@@ -143,22 +143,20 @@ const Class = () => {
 			});
 	};
 
-	const showClass = idClass => {
-		getClassById(idClass)
+	const showEvent = idEvent => {
+		getEventById(idEvent)
 			.then(res => {
-				console.log(res);
 				if (res.status === 200) {
 					const data = res.data.data;
 
-					setDataClassById({
+					setDataEventById({
 						id: data.id,
 						nama: data.nama,
-						description: data.description,
-						categoryId: data.category?.id,
-						startAge: data.startAge,
-						endAge: data.endAge,
-						gender: data.gender,
-						durasi: data.durasi
+						startDate: data.startDate,
+						endDate: data.endDate,
+						biaya: data.biaya,
+						lokasi: data.lokasi,
+						description: data.description
 					});
 					setState(prevState => ({
 						...prevState,
@@ -173,12 +171,12 @@ const Class = () => {
 	};
 
 	const onPut = (values, actions) => {
-		putClass(dataClassById.id, values)
+		putEvent(dataEventById.id, values)
 			.then(res => {
 				if (res.status === 200) {
-					getlistClass();
+					getlistEvent();
 					setState(initialState);
-					message.success(`Edit Class Success`);
+					message.success(`Edit Event Success`);
 					actions.resetForm();
 					actions.setSubmitting(false);
 				}
@@ -190,11 +188,11 @@ const Class = () => {
 	};
 
 	const onDelete = id => {
-		deleteClass(id)
+		deleteEvent(id)
 			.then(res => {
 				if (res.status === 200) {
-					message.error('Class Deleted');
-					getlistClass();
+					message.error('Event Deleted');
+					getlistEvent();
 				}
 			})
 			.catch(err => {
@@ -204,7 +202,7 @@ const Class = () => {
 
 	const onCancelForm = () => {
 		setState({
-			addClass: false,
+			addEvent: false,
 			editClass: false,
 			hidden: false
 		});
@@ -212,11 +210,11 @@ const Class = () => {
 
 	return (
 		<React.Fragment>
-			<div className={state.hidden ? 'd-none' : 'class'} id="class">
+			<div className={state.hidden ? 'd-none' : 'event'} id="event">
 				<CustomInputHeader
 					content={
 						<React.Fragment>
-							<button className="btn" onClick={addClass}>
+							<button className="btn" onClick={addEvent}>
 								New
 							</button>
 							<input
@@ -230,7 +228,7 @@ const Class = () => {
 				/>
 				<TableComponent
 					columns={columns}
-					dataSource={search(dataClass)}
+					dataSource={search(dataEvent)}
 					pagination={{
 						// pageSize: 25,
 						onChange: e => setPage(e),
@@ -241,19 +239,16 @@ const Class = () => {
 					}}
 				/>
 			</div>
-			{state.addClass && (
-				<FormAddClass
+			{state.addEvent && (
+				<FormAddEvent
 					onCancelForm={onCancelForm}
-					listCategory={dataCatagory}
-					listDuration={listDuration}
+					listCategory={[]}
 					onSubmit={onSubmit}
 				/>
 			)}
 			{state.editClass && (
-				<FormEditClass
-					data={dataClassById}
-					listCategory={dataCatagory}
-					listDuration={listDuration}
+				<FormEditEvent
+					data={dataEventById}
 					onCancelForm={onCancelForm}
 					onSubmit={onPut}
 				/>
@@ -261,4 +256,4 @@ const Class = () => {
 		</React.Fragment>
 	);
 };
-export default Class;
+export default Event;

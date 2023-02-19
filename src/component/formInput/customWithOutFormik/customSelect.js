@@ -1,7 +1,8 @@
 import React from 'react';
 import { Select } from 'antd';
+import { IsNullOrEmpty } from '../../../utils/IsNullOrEmpety';
 
-const CustomSelect = ({ label, onChange, options = [] }) => {
+const CustomSelect = ({ label, onChange, options = [], value }) => {
 	return (
 		<div className="form-input" id="form-select">
 			<label>{label}</label>
@@ -11,7 +12,7 @@ const CustomSelect = ({ label, onChange, options = [] }) => {
 				optionFilterProp="children"
 				onChange={onChange}
 				onSearch={onChange}
-				// value={!IsNullOrEmpty(value) ? value : undefined}
+				// value={value}
 				filterOption={(input, option) =>
 					(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 				}

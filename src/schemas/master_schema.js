@@ -23,7 +23,12 @@ export const classSchema = yup.object().shape({
 		.typeError('age must be a number')
 		.positive('age must be greater than zero')
 		.required('age is required'), // .string()
-
+	startAge: yup
+		.number()
+		.typeError('age must be a number')
+		.positive('age must be greater than zero')
+		.required('age is required'), // .string()
+	durasi: yup.string().required('Select one of duration'),
 	gender: yup.string().required('please select one a gender')
 });
 
@@ -44,6 +49,20 @@ export const roomSchema = yup.object().shape({
 		.number()
 		.typeError('capacity must be a number')
 		.positive('capacity must be greater than zero')
-		.required('capacity is required'), // .string()
+		.required('capacity is required'),
 	locationId: yup.number().required('select one a location')
+});
+
+//Room
+export const eventSchema = yup.object().shape({
+	nama: yup.string().required('please insert event name'),
+	startDate: yup.string().required('please insert start date'),
+	endDate: yup.string().required('please insert end date'),
+	biaya: yup
+		.number()
+		.typeError('price must be a number')
+		.positive('price must be greater than zero')
+		.required('price is required'),
+	lokasi: yup.string().required('please insert location'),
+	description: yup.string().required('please insert a description')
 });

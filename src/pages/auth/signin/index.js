@@ -16,6 +16,7 @@ function Signin() {
 			.then(res => {
 				if (res.status === 200) {
 					localStorage.setItem('token', res.data.token);
+					localStorage.setItem('userId', res.data.id);
 					window.location.replace('/');
 					actions.resetForm();
 					actions.setSubmitting(false);

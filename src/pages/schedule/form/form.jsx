@@ -7,11 +7,27 @@ import FormShowBooking from './formShowBooking/formShowBooking';
 const Form = ({
 	show,
 	onHide,
+	listCategory,
+
 	listClass,
+	listTrainer,
+	listTime,
+	startTime,
+	endTime,
 	isFormBooking,
+	onSelectRepeat,
+	onSelectTrainer,
+	onSelectCategory,
+	onUntilDate,
 	onSelectClass,
 	onCheckRepeat,
-	onCreate
+	onCreate,
+	listMember,
+	onCheckMember,
+	onSetMember,
+	members,
+	detailSchedule,
+	deleteMemberOnSchedule
 }) => {
 	return (
 		<CustomModal
@@ -21,12 +37,28 @@ const Form = ({
 			content={
 				isFormBooking ? (
 					<FormBooking
+						listCategory={listCategory}
 						listClass={listClass}
+						listTrainer={listTrainer}
+						listTime={listTime}
+						startTime={startTime}
+						endTime={endTime}
+						onSelectCategory={onSelectCategory}
+						onSelectRepeat={onSelectRepeat}
+						onSelectTrainer={onSelectTrainer}
+						onUntilDate={onUntilDate}
 						onSelectClass={onSelectClass}
 						onCheckRepeat={onCheckRepeat}
 					/>
 				) : (
-					<FormShowBooking />
+					<FormShowBooking
+						listMember={listMember}
+						onCheckMember={onCheckMember}
+						onSetMember={onSetMember}
+						detailSchedule={detailSchedule}
+						members={members}
+						deleteMemberOnSchedule={deleteMemberOnSchedule}
+					/>
 				)
 			}
 			footer={
@@ -34,9 +66,15 @@ const Form = ({
 					<button className="btn-cancel" onClick={onHide}>
 						Close
 					</button>
-					<button className="btn-confirm" onClick={onCreate}>
-						Save
-					</button>
+					{isFormBooking ? (
+						<button className="btn-confirm" onClick={onCreate}>
+							Save
+						</button>
+					) : (
+						<button className="btn-confirm" onClick={onHide}>
+							Save
+						</button>
+					)}
 				</div>
 			}
 		/>

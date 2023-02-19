@@ -4,59 +4,80 @@ import CustomSelect from '../../../../component/formInput/customWithOutFormik/cu
 
 import './formShowBooking.scss';
 import { ICON } from '../../../../assets/icons/icons';
+import { FormatDate } from '../../../../utils/timeFormat';
 
-const FormShowBooking = ({ listClass, onSelectClass, onCheckRepeat }) => {
+const FormShowBooking = ({
+	detailSchedule,
+	listMember,
+	onCheckMember,
+	onSetMember,
+	members,
+	deleteMemberOnSchedule
+}) => {
+	console.log(detailSchedule);
 	return (
 		<div id="form-show-booking">
 			<div className="product-choose">
-				<button className="product-name">Artisitik</button>
+				<button className="product-name">{detailSchedule.class}</button>
 			</div>
 			<div className="detail-product">
 				<div className="list-detail-product">
 					<ICON.CALENDAR />
-					<span>Thursday. December 5 </span>{' '}
+					<span>{FormatDate(new Date(detailSchedule.classDate))} </span>{' '}
 				</div>
 				<div className="list-detail-product">
 					<ICON.TIME_CIRCLE />
-					<span>12:00 - 13:00</span>{' '}
+					<span>
+						{detailSchedule.startTime?.slice(0, 5)} -{' '}
+						{detailSchedule.endTime?.slice(0, 5)}
+					</span>{' '}
 				</div>
 				<div className="list-detail-product">
 					<ICON.MEMBERS />
-					<span>6 Person</span>{' '}
+					<span>{members.length} Person</span>{' '}
+				</div>
+				<div className="list-detail-product">
+					<ICON.MEMBERS />
+					<span>{detailSchedule.trainer}</span>{' '}
 				</div>
 			</div>
 
 			<Row gutter={16} className="add-members">
 				<Col span={14} md={14}>
-					<CustomSelect />
+					<CustomSelect options={listMember} onChange={onCheckMember} />
 				</Col>
 				<Col span={10} md={10}>
-					<button className="button-add-member">
+					<button
+						className="button-add-member"
+						onClick={() => onSetMember(detailSchedule.scheduleId)}
+					>
 						<ICON.MEMBERS style={{ fill: '#fff' }} /> Add Member
 					</button>
 				</Col>
 			</Row>
-
-			<div className="list-member">
-				<div className="member-detail">
-					<span>Deri</span>
-					<button>
-						<ICON.DELETE />
-					</button>
+			{members.length > 0 ? (
+				<div className="list-member">
+					{members.map((member, index) => {
+						return (
+							<div className="member-detail" key={index}>
+								<span>{member.member?.childName}</span>
+								<button>
+									<ICON.DELETE
+										onClick={() =>
+											deleteMemberOnSchedule(
+												member.member.id,
+												detailSchedule.scheduleId
+											)
+										}
+									/>
+								</button>
+							</div>
+						);
+					})}
 				</div>
-				<div className="member-detail">
-					<span>Deri</span>
-					<button>
-						<ICON.DELETE />
-					</button>
-				</div>
-				<div className="member-detail">
-					<span>Deri</span>
-					<button>
-						<ICON.DELETE />
-					</button>
-				</div>
-			</div>
+			) : (
+				<div>No Member</div>
+			)}
 		</div>
 	);
 };

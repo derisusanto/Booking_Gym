@@ -1,6 +1,22 @@
 import FETCH from '../config/index';
 //member
 
+export const listMember = () => {
+	return FETCH.get(`/member/get`);
+};
+
+export const getMemberById = id => {
+	return FETCH.get(`/member/getMember/${id}`);
+};
+
+export const putMember = (id, data) => {
+	return FETCH.put(`/member/update/${id}`, data);
+};
+
+export const deleteMember = id => {
+	return FETCH.delete(`/member/delete/${id}`);
+};
+
 //trainer
 export const createTrainer = data => {
 	return FETCH.post(`/trainer/create`, data);
