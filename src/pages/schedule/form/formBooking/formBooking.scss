@@ -22,60 +22,60 @@
 			}
 		}
 	}
-	.bottom-confirm {
-		width: 100%;
-		height: auto;
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		margin-top: 20px;
-		gap: 10px;
+	// .bottom-confirm {
+	// 	width: 100%;
+	// 	height: auto;
+	// 	display: flex;
+	// 	justify-content: flex-end;
+	// 	align-items: center;
+	// 	margin-top: 20px;
+	// 	gap: 10px;
 
-		.btn-cancel {
-			width: min(100%, 100px);
-			height: 40px;
-			border: 1px solid #3a36db;
-			border-radius: 10px;
-			outline: none;
+	// 	.btn-cancel {
+	// 		width: min(100%, 100px);
+	// 		height: 40px;
+	// 		border: 1px solid #3a36db;
+	// 		border-radius: 10px;
+	// 		outline: none;
 
-			background-color: #fff;
+	// 		background-color: #fff;
 
-			font-family: 'DM Sans';
-			font-style: normal;
-			font-weight: 500;
-			font-size: 16px;
-			line-height: 21px;
-			color: #3a36db;
+	// 		font-family: 'DM Sans';
+	// 		font-style: normal;
+	// 		font-weight: 500;
+	// 		font-size: 16px;
+	// 		line-height: 21px;
+	// 		color: #3a36db;
 
-			&:disabled {
-				background-color: #d3d3d3;
-				opacity: 0.5;
-				pointer-events: none;
-			}
-		}
+	// 		&:disabled {
+	// 			background-color: #d3d3d3;
+	// 			opacity: 0.5;
+	// 			pointer-events: none;
+	// 		}
+	// 	}
 
-		.btn-confirm {
-			width: min(100%, 100px);
-			height: 40px;
-			background-color: #3a36db;
-			border: 0px;
-			border-radius: 10px;
-			outline: none;
+	// 	.btn-confirm {
+	// 		width: min(100%, 100px);
+	// 		height: 40px;
+	// 		background-color: #3a36db;
+	// 		border: 0px;
+	// 		border-radius: 10px;
+	// 		outline: none;
 
-			font-family: 'DM Sans';
-			font-style: normal;
-			font-weight: 500;
-			font-size: 16px;
-			line-height: 21px;
-			color: #ffffff;
+	// 		font-family: 'DM Sans';
+	// 		font-style: normal;
+	// 		font-weight: 500;
+	// 		font-size: 16px;
+	// 		line-height: 21px;
+	// 		color: #ffffff;
 
-			&:disabled {
-				background-color: #d3d3d3;
-				opacity: 0.5;
-				pointer-events: none;
-			}
-		}
-	}
+	// 		&:disabled {
+	// 			background-color: #d3d3d3;
+	// 			opacity: 0.5;
+	// 			pointer-events: none;
+	// 		}
+	// 	}
+	// }
 }
 .bottom-confirm {
 	width: 100%;
@@ -151,5 +151,10 @@
 			opacity: 0.5;
 			pointer-events: none;
 		}
+	}
+
+	&.detail {
+		display: flex;
+		justify-content: space-between;
 	}
 }

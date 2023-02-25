@@ -11,6 +11,7 @@ import './infoEvent.scss';
 import { SimpleCurrency } from '../../../utils/simpleCurrency';
 import { memberRegistEvent } from '../../../service/member';
 import { DetailEvent } from './detailEvent/detailEvent';
+import TitleComponent from '../../../component/titleComponent/titleComponent';
 
 const InfoEventMember = () => {
 	const columns = [
@@ -55,11 +56,6 @@ const InfoEventMember = () => {
 			)
 		}
 	];
-
-	const initialState = {
-		showEvent: false,
-		hidden: false
-	};
 
 	const [state, setState] = useState({
 		showEvent: false
@@ -112,7 +108,7 @@ const InfoEventMember = () => {
 	};
 
 	const registEvent = eventId => {
-		const memberId = localStorage.getItem('userId');
+		const memberId = localStorage.getItem('ljk2345d');
 		const data = {
 			memberId: memberId,
 			eventId: eventId
@@ -127,12 +123,12 @@ const InfoEventMember = () => {
 			})
 			.catch(err => {
 				message.error('Regstered Event Failed');
-				console.log(err);
 			});
 	};
 
 	return (
 		<React.Fragment>
+			<TitleComponent title="Info Class" />
 			<div className="info-event" id="info-event">
 				<CustomInputHeader
 					position="one-right"

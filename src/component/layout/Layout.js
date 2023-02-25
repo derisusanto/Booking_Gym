@@ -29,6 +29,8 @@ const ComponentLayout = ({ children }) => {
 		window.location = '#modal-profile';
 	};
 
+	const roleId = parseInt(localStorage.getItem('lnkl34r'));
+
 	return (
 		<Layout id="layout">
 			<Sider theme="light" collapsible collapsed={collapsed}>
@@ -41,7 +43,7 @@ const ComponentLayout = ({ children }) => {
 					className="menu-list"
 					defaultSelectedKeys={['Dashboard']}
 					onClick={info => onClickMenu(info)}
-					items={Items}
+					items={parseInt(roleId) === 4 ? Items.AdminRoute : Items.MemberRoute}
 				/>
 			</Sider>
 

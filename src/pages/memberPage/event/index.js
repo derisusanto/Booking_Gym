@@ -6,8 +6,12 @@ import { ICON } from '../../../assets/icons/icons';
 
 import './event.scss';
 import { SimpleCurrency } from '../../../utils/simpleCurrency';
-import { listEventMemberById } from '../../../service/member';
-import { DetailEvent } from './detailEvent/detailEvent';
+import {
+	listEventMemberById,
+	uploadPaymentEventById
+} from '../../../service/member';
+import { UploadPayment } from './detailEvent/uploadPayment';
+import TitleComponent from '../../../component/titleComponent/titleComponent';
 
 const EventMember = () => {
 	const columns = [
@@ -62,10 +66,12 @@ const EventMember = () => {
 		uploadPayment: false
 	});
 
-	const userId = localStorage.getItem('userId');
+	const userId = localStorage.getItem('ljk2345d');
+	const [memberId, setMemberId] = useState(null);
 	const [dataEvent, setDataEvent] = useState([]);
 	const [page, setPage] = useState(1);
 
+	const [image, setImage] = useState(null);
 	const [imageURI, setImageURI] = useState(null);
 
 	const [query, setQuery] = useState('');
@@ -84,7 +90,6 @@ const EventMember = () => {
 		listEventMemberById(userId)
 			.then(res => {
 				if (res.status === 200) {
-					console.log(res);
 					const dataTemp = res.data.data.map((item, index) => ({
 						key: index,
 						id: item.id,
@@ -111,27 +116,59 @@ const EventMember = () => {
 		if (!['image/jpeg', 'image/png', 'img/jpg'].includes(type)) {
 			message.error('You can only upload JPG/PNG file!');
 			setImageURI(null);
-		} else if (file && size >= 2000000) {
-			message.error('Image must smaller than 2MB!');
+			setImage(null);
+		} else if (file && size >= 3000000) {
+			message.error('Image must smaller than 3MB!');
 			setImageURI(null);
+			setImage(null);
 		} else {
 			reader.onload = () => {
 				setImageURI(URL.createObjectURL(file));
+				setImage(file);
 			};
 			reader.readAsDataURL(file);
 		}
 	};
 
-	const uploadPaymentRecipt = () => {
-		console.log('masuk');
+	const uploadPaymentRecipt = id => {
+		setMemberId(id);
 		setState(prevState => ({
 			...prevState,
 			uploadPayment: !prevState.uploadPayment
 		}));
 	};
 
+	const onpaymentEvent = () => {
+		var formData = new FormData();
+
+		formData.append('file', image);
+		formData.append('memberId', userId);
+		formData.append('eventId', memberId);
+
+		uploadPaymentEventById(formData)
+			.then(res => {
+				if (res.status === 200) {
+					getlistEvent();
+					message.success('Upload Payment Success');
+					setState(prevState => ({
+						...prevState,
+						uploadPayment: !prevState.uploadPayment
+					}));
+				}
+			})
+			.catch(err => {
+				message.err('Upload Payment Failed');
+			});
+	};
+
+	const onHide = () => {
+		setState({ ...state, uploadPayment: false });
+		setImageURI(null);
+	};
+
 	return (
 		<React.Fragment>
+			<TitleComponent title="Info Class" />
 			<div className="event" id="event">
 				<CustomInputHeader
 					position="one-right"
@@ -160,13 +197,13 @@ const EventMember = () => {
 				/>
 			</div>
 			{state.uploadPayment && (
-				<DetailEvent
+				<UploadPayment
 					show={state.uploadPayment}
 					// data={detailEvent}
-					onHide={() => setState({ ...state, uploadPayment: false })}
+					onHide={onHide}
 					imageURI={imageURI}
 					onChangeImage={handleImage}
-					// onRegister={registEvent}
+					onpaymentEvent={onpaymentEvent}
 				/>
 			)}
 		</React.Fragment>

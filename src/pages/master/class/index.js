@@ -18,6 +18,7 @@ import {
 
 import './class.scss';
 import { listDuration } from './listDuration';
+import TitleComponent from '../../../component/titleComponent/titleComponent';
 const Class = () => {
 	const columns = [
 		{
@@ -213,6 +214,7 @@ const Class = () => {
 	return (
 		<React.Fragment>
 			<div className={state.hidden ? 'd-none' : 'class'} id="class">
+				<TitleComponent title="Class" />
 				<CustomInputHeader
 					content={
 						<React.Fragment>

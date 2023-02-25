@@ -15,6 +15,7 @@ const FormBooking = ({
 	listTime,
 	startTime,
 	endTime,
+	isRepeat,
 	onSelectRepeat,
 	onSelectTrainer,
 	onSelectCategory,
@@ -49,28 +50,30 @@ const FormBooking = ({
 			/>
 
 			<CustomCheckbox name="isRepeat" label="Repeat" onChange={onCheckRepeat} />
+			{isRepeat ? (
+				<Row gutter={16}>
+					<Col span={12} md={12}>
+						<CustomSelect
+							name="repeat"
+							label="Choose Time"
+							placeholder="please select one class"
+							onChange={onSelectRepeat}
+							options={listTime}
+						/>
+					</Col>
+					<Col span={12} md={12}>
+						<CustomInput
+							label="Until Date"
+							name="untilDate"
+							type="date"
+							className="form-control"
+							placeholder="location code"
+							onChange={onUntilDate}
+						/>
+					</Col>
+				</Row>
+			) : null}
 
-			<Row gutter={16}>
-				<Col span={12} md={12}>
-					<CustomSelect
-						name="repeat"
-						label="Choose Time"
-						placeholder="please select one class"
-						onChange={onSelectRepeat}
-						options={listTime}
-					/>
-				</Col>
-				<Col span={12} md={12}>
-					<CustomInput
-						label="Until Date"
-						name="untilDate"
-						type="date"
-						className="form-control"
-						placeholder="location code"
-						onChange={onUntilDate}
-					/>
-				</Col>
-			</Row>
 			<div className="booking-time-info">
 				<div className="icon">
 					<ClockCircleOutlined style={{ fontSize: '50px', color: 'hotpink' }} />

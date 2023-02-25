@@ -7,16 +7,20 @@ import ComponentLayout from './component/layout/Layout';
 // import TableComponent from './component/table/TableData';
 import { RouteAuth } from './routes/auth';
 import { RouteAdmin } from './routes/admin';
+import { RouteMember } from './routes/member';
 
-// const PageNotFound = React.lazy(() =>
-// 	import('./component/notFound/pageNotFound')
-// );
+const PageNotFound = React.lazy(() =>
+	import('./component/notFound/pageNotFound')
+);
 
 function App() {
+	let roleId = localStorage.getItem('lnkl34r');
+	roleId = parseInt(roleId);
+
 	const [isToken, setIsToken] = useState(false);
 
 	useEffect(() => {
-		const token = localStorage.getItem('token');
+		const token = localStorage.getItem('xyzopsat');
 		setIsToken(token);
 	}, []);
 
@@ -39,25 +43,68 @@ function App() {
 								/>
 							);
 						})}
+						<Route
+							path="*"
+							element={
+								<Suspense fallback="">
+									<PageNotFound />
+								</Suspense>
+							}
+						/>
 					</Routes>
 				) : (
 					<ComponentLayout>
-						<Routes>
-							{RouteAdmin.map((route, index) => {
-								return (
-									<Route
-										key={index}
-										exact={route.exact}
-										path={route.path}
-										element={
-											<Suspense fallback={<div>Loading ..</div>}>
-												{route.element}
-											</Suspense>
-										}
-									/>
-								);
-							})}
-						</Routes>
+						{roleId === 4 ? (
+							<Routes>
+								{RouteAdmin.map((route, index) => {
+									return (
+										<Route
+											key={index}
+											exact={route.exact}
+											path={route.path}
+											element={
+												<Suspense fallback={<div>Loading ..</div>}>
+													{route.element}
+												</Suspense>
+											}
+										/>
+									);
+								})}
+								<Route
+									path="*"
+									element={
+										<Suspense fallback="">
+											<PageNotFound />
+										</Suspense>
+									}
+								/>
+							</Routes>
+						) : (
+							<Routes>
+								{RouteMember.map((route, index) => {
+									return (
+										<Route
+											key={index}
+											exact={route.exact}
+											path={route.path}
+											element={
+												<Suspense fallback={<div>Loading ..</div>}>
+													{route.element}
+												</Suspense>
+											}
+										/>
+									);
+								})}
+								<Route
+									path="*"
+									element={
+										<Suspense fallback="">
+											<PageNotFound />
+										</Suspense>
+									}
+								/>
+							</Routes>
+						)}
 					</ComponentLayout>
 
 					// Route path="/signin" element={<Signin />} />

@@ -41,7 +41,17 @@ const Schedule = () => {
 	let formats = {
 		timeGutterFormat: 'HH:mm'
 	};
-
+	const initialBooking = {
+		trainerId: '',
+		classId: '',
+		startTime: '',
+		classDate: '',
+		untilDate: '',
+		locationId: idLocation,
+		endTime: '',
+		repeat: '',
+		isRepeat: false
+	};
 	const [state, setState] = useState({ formBooking: false });
 	const [dataBooking, setDataBooking] = useState({
 		trainerId: '',
@@ -54,6 +64,7 @@ const Schedule = () => {
 		repeat: '',
 		isRepeat: false
 	});
+
 	const [detailBooking, setDetailBooking] = useState({});
 
 	const [events, setEvents] = useState([]);
@@ -78,7 +89,6 @@ const Schedule = () => {
 		getScheduleById(idLocation)
 			.then(res => {
 				if (res.status === 200) {
-					console.log(res);
 					const dataTemp = res.data?.data.map(schedule => ({
 						id: schedule.id,
 						title: schedule.class?.nama,
@@ -183,7 +193,6 @@ const Schedule = () => {
 	};
 
 	const onSelectSlot = e => {
-		console.log(e);
 		const { action, start, end } = e;
 		if (action === 'click') {
 			setTime({ startTime: start, endTime: end });
@@ -211,10 +220,11 @@ const Schedule = () => {
 					setState({ ...state, formBooking: false });
 					message.success('Create Schedule Success');
 					getDataSchedule();
+					setDataBooking(initialBooking);
 				}
 			})
 			.catch(err => {
-				console.log(err);
+				message.error('Please Check Your Input Again');
 			});
 	};
 
@@ -262,14 +272,13 @@ const Schedule = () => {
 			const dataFound = members.find(
 				elemen => elemen.member.id === dataTemp.value
 			);
-			console.log(dataFound);
+
 			if (!dataFound) {
 				// setMembers([...members, { id: dataTemp.value, nama: dataTemp.label }]);
 				let data = { scheduleId: scheduleId, memberId: dataTemp.value };
 
 				addMemberOnSchedule(data)
 					.then(res => {
-						console.log(res);
 						onSelectEvent({ id: scheduleId });
 						message.success('add member success');
 					})
@@ -285,15 +294,12 @@ const Schedule = () => {
 	};
 
 	const deleteMemberOnSchedule = (memberId, scheduleId) => {
-		console.log(memberId);
-		console.log(scheduleId);
 		let data = {
 			memberId: memberId,
 			scheduleId: scheduleId
 		};
 		deleteMember(data)
 			.then(res => {
-				console.log(res);
 				onSelectEvent({ id: scheduleId });
 				message.success('member deleted');
 			})
@@ -306,7 +312,6 @@ const Schedule = () => {
 	const onDeleteSchedule = scheduleId => {
 		deletedSchedule(scheduleId)
 			.then(res => {
-				console.log(res);
 				if (res.status === 200) {
 					getDataSchedule();
 					message.success('schedule deleted');
@@ -387,6 +392,7 @@ const Schedule = () => {
 					listTime={ListTime}
 					startTime={time.startTime}
 					endTime={time.endTime}
+					isRepeat={dataBooking.isRepeat}
 					isFormBooking={isFormBooking}
 					onSelectCategory={onSelectCategory}
 					onSelectClass={onSelectClass}

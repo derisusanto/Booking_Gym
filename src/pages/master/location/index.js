@@ -15,6 +15,7 @@ import {
 
 import { ICON } from '../../../assets/icons/icons';
 import { message } from 'antd';
+import TitleComponent from '../../../component/titleComponent/titleComponent';
 
 const Location = () => {
 	const columns = [
@@ -192,6 +193,7 @@ const Location = () => {
 	return (
 		<React.Fragment>
 			<div id="location" className={state.hidden ? 'd-none' : 'location'}>
+				<TitleComponent title="Location" />
 				<CustomInputHeader
 					content={
 						<React.Fragment>

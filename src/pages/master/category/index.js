@@ -12,6 +12,7 @@ import {
 	putCategory
 } from '../../../service/master';
 import { message } from 'antd';
+import TitleComponent from '../../../component/titleComponent/titleComponent';
 
 const Category = () => {
 	const columns = [
@@ -193,6 +194,7 @@ const Category = () => {
 	return (
 		<React.Fragment>
 			<div id="category">
+				<TitleComponent title="Category" />
 				<CustomInputHeader
 					content={
 						<React.Fragment>

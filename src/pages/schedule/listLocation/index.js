@@ -4,6 +4,7 @@ import TableComponent from '../../../component/table/TableData';
 
 import { ICON } from '../../../assets/icons/icons';
 import { listLocation } from '../../../service/master';
+import TitleComponent from '../../../component/titleComponent/titleComponent';
 
 // import './member.scss';
 
@@ -59,7 +60,6 @@ const ScheduleLocation = () => {
 		listLocation()
 			.then(res => {
 				if (res.status === 200) {
-					console.log(res);
 					const dataTemp = res.data.data.map((item, index) => ({
 						key: index,
 						id: item.id,
@@ -80,7 +80,12 @@ const ScheduleLocation = () => {
 	return (
 		<React.Fragment>
 			<div id="member">
-				<TableComponent columns={columns} dataSource={search(dataLocation)} />
+				<TitleComponent title="Schedule" />
+				<TableComponent
+					title=""
+					columns={columns}
+					dataSource={search(dataLocation)}
+				/>
 			</div>
 		</React.Fragment>
 	);

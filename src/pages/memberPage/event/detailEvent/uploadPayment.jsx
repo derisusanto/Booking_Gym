@@ -1,14 +1,21 @@
 import { CustomModal } from '../../../../component/modal/customModal/customModal';
 
 import { CloudUploadOutlined } from '@ant-design/icons';
-import './detailEvent.scss';
+import './uploadPayment.scss';
+import { IsNullOrEmpty } from '../../../../utils/IsNullOrEmpety';
 
-export const DetailEvent = ({ show, onHide, imageURI, onChangeImage }) => {
+export const UploadPayment = ({
+	show,
+	onHide,
+	imageURI,
+	onChangeImage,
+	onpaymentEvent
+}) => {
 	return (
 		<CustomModal
 			show={show}
 			onHide={onHide}
-			title="Details Event"
+			title="Upload Payment Event"
 			content={
 				<div className="upload" id="upload">
 					<div className="box-upload">
@@ -22,7 +29,13 @@ export const DetailEvent = ({ show, onHide, imageURI, onChangeImage }) => {
 						)}
 						<input type="file" onChange={onChangeImage} />
 					</div>
-					<button className="btn btn-upload">Upload Image</button>
+					<button
+						className="btn btn-upload"
+						onClick={onpaymentEvent}
+						disabled={IsNullOrEmpty(imageURI) ? true : false}
+					>
+						Upload Image
+					</button>
 				</div>
 			}
 		/>

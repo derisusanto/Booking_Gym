@@ -3,6 +3,7 @@ import { message, Image } from 'antd';
 import { CloudUploadOutlined } from '@ant-design/icons';
 
 import './uploadPayment.scss';
+import TitleComponent from '../../../component/titleComponent/titleComponent';
 
 const UploadPayment = () => {
 	const [imageURI, setImageURI] = useState(null);
@@ -29,6 +30,7 @@ const UploadPayment = () => {
 
 	return (
 		<React.Fragment>
+			<TitleComponent title="Info Class" />
 			<div className="upload" id="upload">
 				<div className="box-upload">
 					{imageURI ? (

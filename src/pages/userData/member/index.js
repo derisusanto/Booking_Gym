@@ -96,7 +96,6 @@ const NewRegister = () => {
 		listMember()
 			.then(res => {
 				if (res.status === 200) {
-					console.log(res);
 					const dataTemp = res.data.data.map((item, index) => ({
 						key: index,
 						id: item.id,
@@ -116,7 +115,6 @@ const NewRegister = () => {
 			.then(res => {
 				if (res.status === 200) {
 					const data = res.data.data;
-					console.log(data);
 
 					setDataMemberById(data);
 					setState(prevState => ({

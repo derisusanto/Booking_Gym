@@ -2,6 +2,8 @@ import React from 'react';
 import Absensi from '../pages/absensi';
 import Category from '../pages/master/category';
 
+const Dashboard = React.lazy(() => import('../pages/dashboard/index'));
+
 const ScheduleLocation = React.lazy(() =>
 	import('../pages/schedule/listLocation/index')
 );
@@ -20,18 +22,8 @@ const Trainer = React.lazy(() => import('../pages/userData/trainer/index'));
 const User = React.lazy(() => import('../pages/setting/user/index'));
 const Role = React.lazy(() => import('../pages/setting/role/index'));
 
-// const Signup = React.lazy(() => import('../pages/absensi/'));
-//member
-const InfoEvent = React.lazy(() =>
-	import('../pages/memberPage/infoEvent/index')
-);
-const UploadPayment = React.lazy(() =>
-	import('../pages/memberPage/uploadPayment/index')
-);
-const EventMember = React.lazy(() => import('../pages/memberPage/event/index'));
-
 export const RouteAdmin = [
-	{ path: '/', exact: true, element: <Absensi /> },
+	{ path: '/', exact: true, element: <Dashboard /> },
 
 	{
 		path: '/Schedule/Location',
@@ -43,7 +35,7 @@ export const RouteAdmin = [
 	},
 	{
 		path: '/Dashboard',
-		element: <Absensi />
+		element: <Dashboard />
 	},
 	{
 		path: '/Master/Category',
@@ -69,10 +61,7 @@ export const RouteAdmin = [
 		path: '/Registration',
 		element: <NewRegister />
 	},
-	{
-		path: '/Upload',
-		element: <UploadPayment />
-	},
+
 	{
 		path: '/Userdata/Member',
 		element: <Member />
@@ -88,14 +77,5 @@ export const RouteAdmin = [
 	{
 		path: '/Setting/Role',
 		element: <Role />
-	},
-	//member
-	{
-		path: '/Member/Info/Event',
-		element: <InfoEvent />
-	},
-	{
-		path: '/Member/Event',
-		element: <EventMember />
 	}
 ];

@@ -15,6 +15,7 @@ import {
 	listRoom,
 	putRoom
 } from '../../../service/master';
+import TitleComponent from '../../../component/titleComponent/titleComponent';
 
 const Room = () => {
 	const columns = [
@@ -206,6 +207,7 @@ const Room = () => {
 	return (
 		<React.Fragment>
 			<div id="room" className={state.hidden ? 'd-none' : 'room'}>
+				<TitleComponent title="Room" />
 				<CustomInputHeader
 					content={
 						<React.Fragment>

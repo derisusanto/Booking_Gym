@@ -13,7 +13,7 @@ import {
 	UsergroupAddOutlined
 } from '@ant-design/icons';
 
-const items = [
+const AdminRoute = [
 	{
 		key: 'Dashboard',
 		icon: <UserOutlined />,
@@ -105,7 +105,18 @@ const items = [
 		key: 'Info Event',
 		icon: <CarryOutOutlined />,
 		label: 'Info Event'
+	}
+
+	//
+];
+
+const MemberRoute = [
+	{
+		key: 'Member/Info/Class',
+		icon: <CalendarOutlined />,
+		label: 'Info Class'
 	},
+
 	{
 		key: 'Upload',
 		icon: <CloudUploadOutlined />,
@@ -114,13 +125,14 @@ const items = [
 	{
 		key: 'Member/Info/Event',
 		icon: <CloudUploadOutlined />,
-		label: 'Member Info Event'
+		label: 'Info Event'
 	},
 	{
 		key: 'Member/Event',
 		icon: <CloudUploadOutlined />,
-		label: 'Member Event'
+		label: 'Following Event'
 	}
-	//
 ];
-export default items;
+
+const Route = { AdminRoute, MemberRoute };
+export default Route;

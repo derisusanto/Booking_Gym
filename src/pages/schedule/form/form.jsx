@@ -14,6 +14,7 @@ const Form = ({
 	listTime,
 	startTime,
 	endTime,
+	isRepeat,
 	isFormBooking,
 	onSelectRepeat,
 	onSelectTrainer,
@@ -45,6 +46,7 @@ const Form = ({
 						listTime={listTime}
 						startTime={startTime}
 						endTime={endTime}
+						isRepeat={isRepeat}
 						onSelectCategory={onSelectCategory}
 						onSelectRepeat={onSelectRepeat}
 						onSelectTrainer={onSelectTrainer}
@@ -76,7 +78,7 @@ const Form = ({
 						</button>
 					</div>
 				) : (
-					<div className="bottom-confirm">
+					<div className="bottom-confirm detail">
 						<Popconfirm
 							title="Delete the task"
 							description="Are you sure to delete this task?"

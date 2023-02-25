@@ -18,6 +18,7 @@ import {
 
 import './event.scss';
 import { SimpleCurrency } from '../../../utils/simpleCurrency';
+import TitleComponent from '../../../component/titleComponent/titleComponent';
 
 const Event = () => {
 	const columns = [
@@ -211,6 +212,7 @@ const Event = () => {
 	return (
 		<React.Fragment>
 			<div className={state.hidden ? 'd-none' : 'event'} id="event">
+				<TitleComponent title="Event" />
 				<CustomInputHeader
 					content={
 						<React.Fragment>
