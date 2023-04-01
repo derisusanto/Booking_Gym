@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import TableComponent from '../../component/table/TableData';
 import CustomInputHeader from '../../component/customInputHeader/customInputHeader';
-import { CheckOutlined } from '@ant-design/icons';
+import { CheckOutlined, FileImageOutlined } from '@ant-design/icons';
 
 import './newRegister.scss';
 import {
 	changeClientTobeMember,
 	listNewMember
 } from '../../service/listRegistration';
-import { message } from 'antd';
+import { message, Image } from 'antd';
 
 const NewRegister = () => {
 	const columns = [
@@ -40,6 +40,40 @@ const NewRegister = () => {
 			responsive: ['md']
 		},
 		{
+			title: 'Payment Recipt',
+			dataIndex: 'photo',
+			align: 'center',
+			render: (record, item) => (
+				<div className="action-button">
+					<button
+						style={{
+							width: '40px',
+							height: '40px',
+							borderRadius: '100%',
+							border: 'none'
+						}}
+						onClick={() => setVisible(true)}
+					>
+						<FileImageOutlined />
+						<Image
+							style={{
+								display: 'none'
+							}}
+							preview={{
+								visible,
+
+								src: item.photo,
+								onVisibleChange: value => {
+									setVisible(value);
+								}
+							}}
+						/>
+					</button>
+				</div>
+			)
+		},
+
+		{
 			title: 'Action',
 			dataIndex: 'id',
 			key: 'x',
@@ -60,6 +94,8 @@ const NewRegister = () => {
 
 	const [dataNewMember, setDataNewMember] = useState([]);
 	const [page, setPage] = useState(1);
+
+	const [visible, setVisible] = useState(false);
 
 	const [query, setQuery] = useState('');
 	const keys = ['nama'];
@@ -82,6 +118,8 @@ const NewRegister = () => {
 						id: item.id,
 						nama: item.childName,
 						email: item.email || '-',
+						photo:
+							'https://docs.mobiscroll.com/Content/img/docs/customize-the-full-event.png',
 						gender: item.gender,
 						phoneNumber: item.phoneNumber
 					}));

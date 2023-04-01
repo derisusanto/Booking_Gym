@@ -16,6 +16,10 @@ export const addMemberOnSchedule = data => {
 	return FETCH.post(`/schedule/addMember`, data);
 };
 
+export const listScheduleLocation = memberId => {
+	return FETCH.get(`/location/locationSchedule/${memberId}`);
+};
+
 export const deleteMember = data => {
 	return FETCH.put(`/schedule/deleteMember`, data);
 };

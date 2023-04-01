@@ -13,6 +13,7 @@ import {
 	deleteUser,
 	getUserById,
 	listUser,
+	listUserLocation,
 	putUser
 } from '../../../service/setting';
 
@@ -87,9 +88,10 @@ const User = () => {
 	}, []);
 
 	const getlistLocations = () => {
-		listLocation()
+		listUserLocation()
 			.then(res => {
 				if (res.status === 200) {
+					console.log(res);
 					const dataTemp = res.data.data.map(item => ({
 						label: item.nama,
 						value: item.id

@@ -13,6 +13,7 @@ import {
 	putMember
 } from '../../../service/userData';
 import FormEditMember from './formEditMember';
+import { listCategory, listLocation } from '../../../service/master';
 
 const NewRegister = () => {
 	const columns = [
@@ -53,19 +54,13 @@ const NewRegister = () => {
 				</div>
 			)
 		}
-		// {
-		// 	title: 'Class Name',
-		// 	dataIndex: 'tweakPoint',
-		// 	sorter: {
-		// 		compare: (a, b) => a.tweakPoint - b.tweakPoint,
-		// 		multiple: 3
-		// 	},
-		// 	responsive: ['md']
-		// }
 	];
 
 	const [dataMember, setDataMember] = useState([]);
 	const [dataMemberById, setDataMemberById] = useState({});
+
+	const [listLocations, setListLocations] = useState([]);
+	const [listCategories, setListCategories] = useState([]);
 
 	const [page, setPage] = useState(1);
 
@@ -90,6 +85,8 @@ const NewRegister = () => {
 
 	useEffect(() => {
 		getlistMember();
+		getlistLocations();
+		getlistCategories();
 	}, []);
 
 	const getlistMember = () => {
@@ -103,6 +100,37 @@ const NewRegister = () => {
 						email: item.email
 					}));
 					setDataMember(dataTemp);
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+
+	const getlistLocations = () => {
+		listLocation()
+			.then(res => {
+				if (res.status === 200) {
+					const dataTemp = res.data.data.map(item => ({
+						label: item.nama,
+						value: item.id
+					}));
+					setListLocations(dataTemp);
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+	const getlistCategories = () => {
+		listCategory()
+			.then(res => {
+				if (res.status === 200) {
+					const dataTemp = res.data.data.map(item => ({
+						label: item.nama,
+						value: item.id
+					}));
+					setListCategories(dataTemp);
 				}
 			})
 			.catch(err => {
@@ -181,11 +209,20 @@ const NewRegister = () => {
 						</React.Fragment>
 					}
 				/>
-				<TableComponent columns={columns} dataSource={search(dataMember)} />
+				<TableComponent
+					columns={columns}
+					dataSource={search(dataMember)}
+					pagination={{
+						onChange: e => setPage(e),
+						showSizeChanger: true
+					}}
+				/>
 			</div>
 			{state.editMember && (
 				<FormEditMember
 					data={dataMemberById}
+					listLocations={listLocations}
+					listCategories={listCategories}
 					onCancelForm={onCancelForm}
 					onSubmit={onPut}
 				/>

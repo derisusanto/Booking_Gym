@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TableComponent from '../../../component/table/TableData';
+import TableComponent from '../../component/table/TableData';
 
-import { ICON } from '../../../assets/icons/icons';
+import { ICON } from '../../assets/icons/icons';
 
-import TitleComponent from '../../../component/titleComponent/titleComponent';
-import { listScheduleLocation } from '../../../service/schedule';
+import TitleComponent from '../../component/titleComponent/titleComponent';
+import { listScheduleLocation } from '../../service/schedule';
 
 // import './member.scss';
 
-const ScheduleLocation = () => {
+const Report = () => {
 	const navigate = useNavigate();
 	const memberId = localStorage.getItem('ljk2345d');
 	const columns = [
@@ -34,7 +34,7 @@ const ScheduleLocation = () => {
 					<ICON.EDIT
 						width={30}
 						onClick={() => {
-							showDataSchedule(item.id);
+							showDataReport(item.id);
 						}}
 					/>
 				</div>
@@ -75,14 +75,14 @@ const ScheduleLocation = () => {
 			});
 	};
 
-	const showDataSchedule = idLocation => {
-		navigate(`/Schedule/${idLocation}`);
+	const showDataReport = idLocation => {
+		navigate(`/Report/List/Registration/${idLocation}`);
 	};
 
 	return (
 		<React.Fragment>
 			<div id="member">
-				<TitleComponent title="Schedule" />
+				<TitleComponent title="Location Report" />
 				<TableComponent
 					title=""
 					columns={columns}
@@ -96,4 +96,4 @@ const ScheduleLocation = () => {
 		</React.Fragment>
 	);
 };
-export default ScheduleLocation;
+export default Report;

@@ -73,7 +73,7 @@ const AdminRoute = [
 		label: 'New Registration'
 	},
 	{
-		key: 'Report',
+		key: 'Report/Locations',
 		icon: <FundOutlined />,
 		label: 'Report'
 	},

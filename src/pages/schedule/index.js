@@ -34,6 +34,7 @@ import {
 import { getFormattedDate } from '../../utils/scheduleFormatDate';
 import formatOldDate, { FormatDate, FormatTime } from '../../utils/timeFormat';
 import { message } from 'antd';
+import TitleComponent from '../../component/titleComponent/titleComponent';
 
 const Schedule = () => {
 	const { idLocation } = useParams();
@@ -210,7 +211,6 @@ const Schedule = () => {
 				formBooking: !prevState.formBooking
 			}));
 		}
-		// console.log(new Date(end).getMinutes() + 30);
 	};
 
 	const onCreate = () => {
@@ -342,15 +342,14 @@ const Schedule = () => {
 	const EventPropGetter = useCallback(() => {
 		return {
 			style: {
-				backgroundColor: '#85C1E9',
+				backgroundColor: '#fac2b0',
 				color: 'black',
 				width: '100%',
 				height: 'auto',
-				borderLeft: `4px solid #bc770f`,
-				borderRadius: '8px',
+				borderLeft: `6px solid #F7825D`,
+				borderRadius: '0px 8px 8px 0px',
 				textAlign: 'center',
 				fontSize: '12px',
-				// borderRadius: '0px',
 				whiteSpace: 'pre-wrap'
 			}
 		};
@@ -358,6 +357,7 @@ const Schedule = () => {
 
 	return (
 		<React.Fragment>
+			<TitleComponent title="Location" />
 			<div className="schedule-background">
 				<Calendar
 					selectable

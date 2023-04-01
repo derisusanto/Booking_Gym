@@ -7,7 +7,7 @@ const PageNotFound = () => {
 	return (
 		<div className="page-not-found" id="page-not-found">
 			<div className="page-404">
-				4<img src={IMAGE.NOTFOUND.IMG} alt="img-not-found" />4
+				4<img src={IMAGE.NOTFOUND.IMG} alt="img-not-found" loading="lazy" />4
 			</div>
 			<div className="description-notfound">
 				<h1>OOH! You're lost</h1>

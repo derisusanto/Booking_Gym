@@ -1,6 +1,7 @@
 .schedule-background {
 	background-color: #fff;
 	padding: 10px;
+	border-radius: 5px;
 }
 
 .rbc-day-slot .rbc-event {
@@ -123,4 +124,8 @@
 
 .rbc-time-content > * + * > * {
 	border: none;
+}
+
+.rbc-day-slot .rbc-events-container {
+	margin-right: 6px;
 }

@@ -214,12 +214,8 @@ const Trainer = () => {
 					columns={columns}
 					dataSource={search(dataTrainer)}
 					pagination={{
-						// pageSize: 25,
 						onChange: e => setPage(e),
 						showSizeChanger: true
-						// onChangePage(current) {
-						// 	setPage(current + 1);
-						// }
 					}}
 				/>
 			</div>

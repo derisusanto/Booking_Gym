@@ -147,7 +147,6 @@ const Class = () => {
 	const showClass = idClass => {
 		getClassById(idClass)
 			.then(res => {
-				console.log(res);
 				if (res.status === 200) {
 					const data = res.data.data;
 

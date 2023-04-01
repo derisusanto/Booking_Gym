@@ -25,12 +25,15 @@ export const signupSchema = yup.object().shape({
 	phoneNumber: yup
 		.string()
 		.matches(phoneRegExp, 'Phone number is not valid')
-		.required('require'),
+		.required('phone number required'),
+	motherName: yup.string().required('mother required'),
+	fatherName: yup.string().required('father required'),
 	gender: yup.string().required('Select one of gender'),
-	birthPlace: yup.string().required('required'),
-	birthDate: yup.string().required('required'),
+	birthPlace: yup.string().required('birth place required'),
+	birthDate: yup.string().required('birth date required'),
 	medicalRecord: yup.string(),
-	Address: yup.string().required('required'),
-	reasonsTraining: yup.string().required('required'),
-	classType: yup.string().required('Select one of the class')
+	Address: yup.string().required('address required'),
+	reasonsTraining: yup.string().required('reaseon training required'),
+	categoryId: yup.string().required('Select one of the category'),
+	locationId: yup.string().required('Select one of the location')
 });

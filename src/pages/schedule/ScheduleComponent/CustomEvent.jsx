@@ -16,37 +16,24 @@ const CustomEvent = props => {
 
 	return (
 		<>
-			<div
-				className="w-100 z-100"
-				style={{ fontSize: '13px', textAlign: 'center' }}
+			{/* <div
+			className="w-100 z-100"
+			style={{ fontSize: '13px', textAlign: 'center' }}
 			>
 				<small>
 					{FormatTime(start)} - {FormatTime(end)}
 				</small>
-			</div>
+			</div> */}
 			{/* content */}
 			<div className="content-card">
 				<div className="text-start">
-					<div
-						style={{
-							backgroundColor: '#EDBB99',
-							borderRadius: '8px',
-							width: '100%',
-							height: 'auto',
-							padding: '8px 5px',
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center'
-						}}
-					>
-						{title}
-					</div>
-					{/* <div className="event-title ">
-						<span>&#128520;</span>: <span>{title}</span>
-					</div>
+					<div className="member">Member 7 of 15</div>
 					<div className="event-title">
-						<span>&#128512;</span>: <span>2 dari 6</span>
-					</div> */}
+						<span>{title}</span>
+						<span>
+							{FormatTime(start)} - {FormatTime(end)}
+						</span>
+					</div>
 				</div>
 
 				{/* <div className="participan">

@@ -1,6 +1,13 @@
 import React from 'react';
 import Absensi from '../pages/absensi';
 import Category from '../pages/master/category';
+// import LitsReport from '../pages/report';
+// import Report from '../pages/report';
+
+const LocationReport = React.lazy(() =>
+	import('../pages/report/report_locations')
+);
+const ListReport = React.lazy(() => import('../pages/report/index'));
 
 const Dashboard = React.lazy(() => import('../pages/dashboard/index'));
 
@@ -77,5 +84,13 @@ export const RouteAdmin = [
 	{
 		path: '/Setting/Role',
 		element: <Role />
+	},
+	{
+		path: '/Report/Locations',
+		element: <LocationReport />
+	},
+	{
+		path: '/Report/List/:titlePath/:id',
+		element: <ListReport />
 	}
 ];

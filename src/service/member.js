@@ -15,3 +15,7 @@ export const uploadPaymentEventById = data => {
 export const listInfoClass = idMember => {
 	return FETCH.get(`/schedule/memberSchedule/${idMember}`);
 };
+
+export const memberUploadPayment = data => {
+	return FETCH.post(`/member/upload`, data);
+};

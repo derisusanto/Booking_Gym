@@ -15,7 +15,6 @@ function Signin() {
 		signIn(values)
 			.then(res => {
 				if (res.status === 200) {
-					console.log(res);
 					localStorage.setItem('xyzopsat', res.data.token);
 					localStorage.setItem('ljk2345d', res.data.id);
 					localStorage.setItem('lnkl34r', res.data.roleId);

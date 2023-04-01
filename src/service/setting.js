@@ -9,6 +9,10 @@ export const listUser = () => {
 	return FETCH.get(`/user/get`);
 };
 
+export const listUserLocation = () => {
+	return FETCH.get(`/location/locationUser`);
+};
+
 export const getUserById = id => {
 	return FETCH.get(`/user/getUser/${id}`);
 };

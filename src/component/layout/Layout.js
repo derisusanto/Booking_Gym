@@ -61,18 +61,14 @@ const ComponentLayout = ({ children }) => {
 					<div className="client-profile" onClick={() => onProfile()}>
 						<img
 							width="30px"
-							src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-512.png"
+							src="https://cdn.pixabay.com/photo/2016/08/31/11/55/icon-1633250_640.png"
 							alt="user-from-google"
 						/>
 						<span>Michel</span>
 						<RightOutlined className="icon-profile" />
 					</div>
 				</Header>
-				{/* <div style={{ padding: '5px 24px' }}>
-					<Breadcrumb>
-						<Breadcrumb.Item>{breadcrumb}</Breadcrumb.Item>
-					</Breadcrumb>
-				</div> */}
+
 				<Content
 					className="site-layout-background"
 					style={{
