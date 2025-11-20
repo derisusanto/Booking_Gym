@@ -28,7 +28,25 @@ function App() {
     <div className="App">
       <Router>
         {" "}
-        {IsNullOrEmpty(isToken) ? (
+        <ComponentLayout>
+          <Routes>
+            {RouteAdmin.map((route, index) => {
+              return (
+                <Route
+                  key={index}
+                  exact={route.exact}
+                  path={route.path}
+                  element={
+                    <Suspense fallback={<div>Loading ..</div>}>
+                      {route.element}
+                    </Suspense>
+                  }
+                />
+              );
+            })}
+          </Routes>
+        </ComponentLayout>
+        {/* {IsNullOrEmpty(isToken) ? (
           <Routes>
             {RouteAuth.map((route, index) => {
               return (
@@ -121,7 +139,7 @@ function App() {
               </Routes>
             )}
           </ComponentLayout>
-        )}
+        )} */}
       </Router>
     </div>
   );

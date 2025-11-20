@@ -43,7 +43,8 @@ const ComponentLayout = ({ children }) => {
           className="menu-list"
           defaultSelectedKeys={["Dashboard"]}
           onClick={(info) => onClickMenu(info)}
-          items={parseInt(roleId) === 1 ? Items.AdminRoute : Items.MemberRoute}
+          items={Items.AdminRoute}
+          // items={parseInt(roleId) === 1 ? Items.AdminRoute : Items.MemberRoute}
         />
       </Sider>
 
